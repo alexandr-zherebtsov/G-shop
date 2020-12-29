@@ -13,6 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 class LogInViewModel extends BaseViewModel {
 
   final JsonDecoder _decoder = JsonDecoder();
+  final loginFormKey = GlobalKey<FormState>();
   final AuthService _authService = diContainer.get();
 
   TextEditingController emailController = TextEditingController();

@@ -8,6 +8,7 @@ import 'package:g_shop/core/servises/dependency_injection.dart';
 import 'package:g_shop/data/database.dart';
 import 'package:g_shop/domain/user.dart';
 import 'package:g_shop/generated/locator.dart';
+import 'package:g_shop/ui/utils/other_utils.dart';
 import 'package:g_shop/ui/utils/toast_widget.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -15,7 +16,8 @@ import 'package:stacked_services/stacked_services.dart';
 class RegisterViewModel extends BaseViewModel {
 
   final JsonDecoder _decoder = JsonDecoder();
-  final GlobalKey registerFormKey = GlobalKey<FormState>();
+  final registerFormKey = GlobalKey<FormState>();
+  final registerDataFormKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -46,10 +48,13 @@ class RegisterViewModel extends BaseViewModel {
     try {
       var userReg = UserModel(
         id: FirebaseAuth.instance.currentUser.uid,
+        photo: '',
         name: nameController.text,
         surname: surnameController.text,
         city: cityController.text,
-        phoneNumber: phoneNumberController.text,
+        email: FirebaseAuth.instance.currentUser.email,
+        phoneNumber: dropFormatMaskedPhone(phoneNumberController.text),
+        aboutYourself: '',
       ).toFirebase();
       await Database().createUser(userReg);
       locator<NavigationService>().clearStackAndShow('/');

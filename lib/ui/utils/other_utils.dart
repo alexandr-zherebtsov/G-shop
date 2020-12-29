@@ -2,6 +2,28 @@ import 'package:g_shop/generated/locator.dart';
 import 'package:g_shop/ui/utils/dialog_type.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+String formatMaskedPhone(String phoneNumber) {
+  return phoneNumber.substring(0, 3) +
+      " (" +
+      phoneNumber.substring(3, 6) +
+      ") " +
+      phoneNumber.substring(6, 9) +
+      "-" +
+      phoneNumber.substring(9, 11) +
+      "-" +
+      phoneNumber.substring(11, phoneNumber.length);
+}
+
+String dropFormatMaskedPhone(String phoneNumber) {
+  return phoneNumber
+      .replaceAll("(", "")
+      .replaceAll(")", "")
+      .replaceAll("-", "")
+      .replaceAll(" ", "")
+      .trim()
+      .toString();
+}
+
 Future<void> gdun(int seconds) async {
   await Future.delayed(Duration(seconds: seconds));
 }

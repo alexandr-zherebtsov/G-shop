@@ -13,6 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   stacked_themes: ^0.2.2+1
   fluttertoast: ^7.1.6
+  mask_text_input_formatter: ^1.2.1
   #core
   url_launcher: ^5.7.10
   firebase_core: ^0.5.3
