@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:g_shop/constants/themes.dart';
-import 'package:g_shop/core/servises/dependency_injection.dart';
+import 'package:g_shop/core/services/dependency_injection.dart';
 import 'package:g_shop/generated/locator.dart';
 import 'package:g_shop/generated/router.gr.dart' as auto_router;
 import 'package:stacked_services/stacked_services.dart';

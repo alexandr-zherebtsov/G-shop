@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
 
 class PriceWidget extends StatelessWidget {
-
   final String title;
   const PriceWidget(this.title);
 

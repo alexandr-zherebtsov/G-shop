@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class HeadlineWidget extends StatelessWidget {
-
   final String title;
   final TextStyle textStyle;
   const HeadlineWidget(this.title, this.textStyle);

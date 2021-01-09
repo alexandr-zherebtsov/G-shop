@@ -1,24 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:g_shop/generated/locator.dart';
+import 'package:g_shop/generated/router.gr.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class AdvertViewModel extends FutureViewModel {
+class AdvertViewModel extends BaseViewModel {
+  String uid = FirebaseAuth.instance.currentUser.uid;
 
-  @override
-  Future futureToRun() async {
-    await init();
-  }
-
-  init() async {
-
+  void toAdvert() {
+    locator<NavigationService>().navigateTo('/advert');
   }
 
   void back() {
     locator<NavigationService>().back();
   }
 
-  void profile() {
-    locator<NavigationService>().navigateTo('/profile');
+  void toProfile(uid) {
+    locator<NavigationService>().navigateTo('/profile', arguments: ProfileViewArguments(uid: uid));
   }
 
   void advertEditing() {

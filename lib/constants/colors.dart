@@ -5,6 +5,7 @@ const Brightness brightnessLight = Brightness.light;
 
 const Color transparentColor = Colors.transparent;
 const Color transparentLightGreen = Color(0x348BC34A);
+const Color firstProgressLightGreen = Color(0xFFB5E180);
 const Color lightGreen = Colors.lightGreen;
 const Color whiteColor = Colors.white;
 const Color whiteGray = Color(0xFFF2F2F2);

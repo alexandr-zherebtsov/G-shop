@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
 import 'package:g_shop/core/exeptions/exception_handler.dart';
-import 'package:g_shop/core/servises/auth_servise.dart';
-import 'package:g_shop/core/servises/dependency_injection.dart';
-import 'package:g_shop/data/database.dart';
-import 'package:g_shop/domain/user.dart';
+import 'package:g_shop/core/models/user_model.dart';
+import 'package:g_shop/core/services/auth_service.dart';
+import 'package:g_shop/core/services/dependency_injection.dart';
+import 'package:g_shop/core/services/user_service.dart';
 import 'package:g_shop/generated/locator.dart';
 import 'package:g_shop/ui/utils/other_utils.dart';
 import 'package:g_shop/ui/utils/toast_widget.dart';
@@ -14,8 +14,8 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class RegisterViewModel extends BaseViewModel {
-
   final JsonDecoder _decoder = JsonDecoder();
+
   final registerFormKey = GlobalKey<FormState>();
   final registerDataFormKey = GlobalKey<FormState>();
 
@@ -29,10 +29,19 @@ class RegisterViewModel extends BaseViewModel {
 
   final AuthService _authService = diContainer.get();
 
+  String getEmail() {
+    try {
+      return FirebaseAuth.instance.currentUser.email;
+    } catch (e) {
+      return '';
+    }
+  }
+
   void registerEmailPassword() async {
     try {
       await _authService.registerEmailPassword(emailController.text, passwordController.text);
       if (FirebaseAuth.instance.currentUser != null) {
+        getEmail();
         locator<NavigationService>().clearStackAndShow('/register_data');
         FocusManager.instance.primaryFocus.unfocus();
         emailController.clear();
@@ -56,7 +65,7 @@ class RegisterViewModel extends BaseViewModel {
         phoneNumber: dropFormatMaskedPhone(phoneNumberController.text),
         aboutYourself: '',
       ).toFirebase();
-      await Database().createUser(userReg);
+      await UserService().createUser(userReg);
       locator<NavigationService>().clearStackAndShow('/');
       FocusManager.instance.primaryFocus.unfocus();
       nameController.clear();

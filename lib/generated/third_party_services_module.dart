@@ -1,4 +1,5 @@
 import 'package:g_shop/core/managers/dio_manager.dart';
+import 'package:g_shop/core/services/advert_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_themes/stacked_themes.dart';
@@ -19,5 +20,8 @@ abstract class ThirdPartyServicesModule {
 
   @lazySingleton
   ThemeService get themeService;
+
+  @lazySingleton
+  AdvertService get advertService;
 
 }

@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:g_shop/core/exeptions/exception_handler.dart';
 
 class AuthService {
-
   final JsonDecoder _decoder = JsonDecoder();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 

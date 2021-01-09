@@ -13,13 +13,10 @@ dependencies:
   cupertino_icons: ^1.0.0
   stacked_themes: ^0.2.2+1
   fluttertoast: ^7.1.6
+  responsive_builder: ^0.3.0
   mask_text_input_formatter: ^1.2.1
   #core
   url_launcher: ^5.7.10
-  firebase_core: ^0.5.3
-  firebase_auth: ^0.18.4+1
-  cloud_firestore: ^0.14.4
-  firebase_storage: ^5.2.0
   stacked: ^1.7.6
   stacked_services: ^0.5.4+4
   get_it: ^5.0.1
@@ -28,6 +25,11 @@ dependencies:
   connectivity: ^2.0.1
   dio: ^3.0.10
   pretty_dio_logger: ^1.1.1
+  # firebase
+  firebase_core: ^0.5.3
+  firebase_auth: ^0.18.4+1
+  cloud_firestore: ^0.14.4
+  firebase_storage: ^5.2.0
 
 dev_dependencies:
   flutter_test:

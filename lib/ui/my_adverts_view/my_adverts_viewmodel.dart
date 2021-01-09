@@ -1,37 +1,40 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:g_shop/core/exeptions/exception_handler.dart';
 import 'package:g_shop/core/models/advert_model.dart';
 import 'package:g_shop/core/services/advert_service.dart';
 import 'package:g_shop/generated/locator.dart';
-import 'package:g_shop/generated/router.gr.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:g_shop/core/exeptions/exception_handler.dart';
 
-class HomeViewModel extends FutureViewModel {
+class MyAdvertsViewModel extends FutureViewModel {
   final JsonDecoder _decoder = JsonDecoder();
-  String currentUserUid = '';
-  List<AdvertModel> adverts;
+  List<AdvertModel> myAdverts;
 
   @override
   Future futureToRun() async {
-    await getAdverts();
+    await getMyAdverts();
   }
 
-  Future<void> getAdverts() async {
-    currentUserUid = FirebaseAuth.instance.currentUser.uid;
+  getMyAdverts() async {
     try {
-      adverts = await locator<AdvertService>().getAdverts();
+      final uid = FirebaseAuth.instance.currentUser.uid;
+      myAdverts = await locator<AdvertService>().getMyAdverts(uid);
     } catch (e) {
       handleErrorApp(e, _decoder);
     }
+
   }
 
-  void toMyProfile() {
-    locator<NavigationService>().navigateTo('/profile', arguments: ProfileViewArguments(uid: currentUserUid));
+  void back() {
+    locator<NavigationService>().back();
   }
 
-  void toAdvertCreate() {
+  void advert() {
+    locator<NavigationService>().navigateTo('/advert');
+  }
+
+  void advertCreate() {
     locator<NavigationService>().navigateTo('/advert_create');
   }
 }

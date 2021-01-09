@@ -23,7 +23,7 @@ List<ThemeData> getThemes() {
       ),
       cardTheme: CardTheme(
         color: grayColor_3,
-        shadowColor: blackGrayColor,
+        shadowColor: blackColor,
         clipBehavior: Clip.hardEdge,
         margin: const EdgeInsets.only(top: 8.0, right: 10.0, left: 10.0),
       ),

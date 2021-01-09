@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
-import 'package:g_shop/ui/home_view/home_viewmodel.dart';
+import 'package:g_shop/ui/my_adverts_view/my_adverts_viewmodel.dart';
 import 'package:g_shop/ui/utils/progress_screen.dart';
 import 'package:g_shop/ui/utils/scroll_custom.dart';
 import 'package:g_shop/ui/widgets/card_widget.dart';
 import 'package:g_shop/ui/widgets/no_adverts_widget.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-class HomeView extends StatelessWidget {
+class MyAdvertsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilderConnect<HomeViewModel>.reactive(
-      viewModelBuilder: () => HomeViewModel(),
+    return ViewModelBuilderConnect<MyAdvertsViewModel>.reactive(
+      viewModelBuilder: () => MyAdvertsViewModel(),
       builder: (context, model, _) => model.isBusy? ProgressScreen() : ResponsiveBuilder(
         builder: (context, sizingInformation) => Scaffold(
           appBar: AppBar(
-            title: Text('Home', style: Theme.of(context).textTheme.headline2),
-            leading: null,
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.person),
-                onPressed: () => model.toMyProfile(),
-                tooltip: 'Your Profile',
-              ),
-            ],
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              tooltip: 'Back',
+              onPressed: () => model.back(),
+            ),
+            title: Text('Your Adverts', style: Theme.of(context).textTheme.headline2),
           ),
-          body: model.adverts == null || model.adverts.isEmpty ?
-          NoAdvertsWidget(title: 'No adverts') : ScrollConfiguration(
+          body: model.myAdverts == null || model.myAdverts.isEmpty ?
+          NoAdvertsWidget(title: 'You have no adverts') : ScrollConfiguration(
             behavior: MyBehavior(),
             child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
               child: Padding(
                 padding: sizingInformation.isTablet || sizingInformation.isDesktop ?
                 const EdgeInsets.symmetric(horizontal: 10.0) : EdgeInsets.zero,
@@ -38,7 +34,7 @@ class HomeView extends StatelessWidget {
                   children: [
                     SizedBox(height: 10),
                     Wrap(
-                      children: model.adverts.map((e) => CardWidget(e: e)).toList(),
+                      children: model.myAdverts.map((e) => CardWidget(e: e)).toList(),
                     ),
                     SizedBox(height: 90),
                   ],
@@ -70,7 +66,7 @@ class HomeView extends StatelessWidget {
                 size: 40,
               ),
             ),
-            onPressed: () => model.toAdvertCreate(),
+            onPressed: () => model.advertCreate(),
           ),
         ),
       ),

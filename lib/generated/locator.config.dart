@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
+import '../core/services/advert_service.dart';
 import '../core/managers/dio_manager.dart';
 import 'third_party_services_module.dart';
 
@@ -22,6 +23,7 @@ GetIt $initGetIt(
 }) {
   final gh = GetItHelper(get, environment, environmentFilter);
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
+  gh.lazySingleton<AdvertService>(() => thirdPartyServicesModule.advertService);
   gh.lazySingleton<DialogService>(() => thirdPartyServicesModule.dialogService);
   gh.lazySingleton<DioManager>(() => thirdPartyServicesModule.dioManager);
   gh.lazySingleton<NavigationService>(
@@ -33,6 +35,8 @@ GetIt $initGetIt(
 }
 
 class _$ThirdPartyServicesModule extends ThirdPartyServicesModule {
+  @override
+  AdvertService get advertService => AdvertService();
   @override
   DialogService get dialogService => DialogService();
   @override
