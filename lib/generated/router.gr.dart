@@ -13,6 +13,7 @@ import '../core/models/advert_model.dart';
 import '../ui/advert_create_view/advert_create_view.dart';
 import '../ui/advert_editing_view/advert_editing_view.dart';
 import '../ui/advert_view/advert_view.dart';
+import '../ui/app_loading_view/app_loading_view.dart';
 import '../ui/home_view/home_view.dart';
 import '../ui/login_view/login_view.dart';
 import '../ui/my_adverts_view/my_adverts_view.dart';
@@ -20,12 +21,9 @@ import '../ui/profile_editing/profile_editing_view.dart';
 import '../ui/profile_view/profile_view.dart';
 import '../ui/register_view/register_data_view.dart';
 import '../ui/register_view/register_view.dart';
-import '../ui/utils/app_loading.dart';
-import '../ui/utils/check_login.dart';
 
 class Routes {
-  static const String appLoading = '/';
-  static const String checkLogin = '/check_login';
+  static const String appLoadingView = '/';
   static const String homeView = '/home';
   static const String logInView = '/login';
   static const String registerView = '/register';
@@ -37,8 +35,7 @@ class Routes {
   static const String profileView = '/profile';
   static const String profileEditingView = '/profile_editing';
   static const all = <String>{
-    appLoading,
-    checkLogin,
+    appLoadingView,
     homeView,
     logInView,
     registerView,
@@ -56,8 +53,7 @@ class Router extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
-    RouteDef(Routes.appLoading, page: AppLoading),
-    RouteDef(Routes.checkLogin, page: CheckLogin),
+    RouteDef(Routes.appLoadingView, page: AppLoadingView),
     RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.logInView, page: LogInView),
     RouteDef(Routes.registerView, page: RegisterView),
@@ -72,15 +68,9 @@ class Router extends RouterBase {
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
-    AppLoading: (data) {
+    AppLoadingView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => AppLoading(),
-        settings: data,
-      );
-    },
-    CheckLogin: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => CheckLogin(),
+        builder: (context) => AppLoadingView(),
         settings: data,
       );
     },

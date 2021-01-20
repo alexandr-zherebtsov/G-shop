@@ -13,6 +13,12 @@ class HomeViewModel extends FutureViewModel {
   String currentUserUid = '';
   List<AdvertModel> adverts;
 
+  void toCheckLogin() {
+    locator<NavigationService>().clearStackAndShow(
+      '/check_login',
+    );
+  }
+
   @override
   Future futureToRun() async {
     await getAdverts();
@@ -28,7 +34,8 @@ class HomeViewModel extends FutureViewModel {
   }
 
   void toMyProfile() {
-    locator<NavigationService>().navigateTo('/profile', arguments: ProfileViewArguments(uid: currentUserUid));
+    locator<NavigationService>().navigateTo('/profile',
+        arguments: ProfileViewArguments(uid: currentUserUid));
   }
 
   void toAdvertCreate() {

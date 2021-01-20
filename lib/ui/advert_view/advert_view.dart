@@ -52,12 +52,28 @@ class AdvertView extends StatelessWidget {
                 Hero(
                   tag: e.id + 'photo',
                   child: Container(
-                    color: blackColor.withOpacity(0.1),
                     height: MediaQuery.of(context).size.width,
                     width: MediaQuery.of(context).size.width,
-                    child: Image.asset(
-                      'assets/images/guitar.jpg',
+                    color: blackColor.withOpacity(0.1),
+                    child: Image.network(
+                      'https://cdn.shopify.com/s/files/1/1140/2426/products/Gibson-USA-Les-Paul-Standard-Electric-Guitar-Heritage-Cherry-Sunburst-11252_1600x1600.jpg?v=1588348769',
+                      key: UniqueKey(),
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes : null,
+                          ),
+                        );
+                      },
                       fit: BoxFit.cover,
+                      errorBuilder: (context, _, error) => Icon(
+                        Icons.error_outline,
+                        size: 90,
+                      ),
                     ),
                   ),
                 ),
@@ -109,14 +125,30 @@ class AdvertView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              color: blackColor.withOpacity(0.1),
-              width: MediaQuery.of(context).size.height,
-              child: Hero(
-                tag: e.id + 'photo',
-                child: Image.asset(
-                  'assets/images/guitar.jpg',
+            Hero(
+              tag: e.id + 'photo',
+              child: Container(
+                width: MediaQuery.of(context).size.height,
+                color: blackColor.withOpacity(0.1),
+                child: Image.network(
+                  'https://cdn.shopify.com/s/files/1/1140/2426/products/Gibson-USA-Les-Paul-Standard-Electric-Guitar-Heritage-Cherry-Sunburst-11252_1600x1600.jpg?v=1588348769',
+                  key: UniqueKey(),
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes : null,
+                      ),
+                    );
+                  },
                   fit: BoxFit.cover,
+                  errorBuilder: (context, _, error) => Icon(
+                    Icons.error_outline,
+                    size: 90,
+                  ),
                 ),
               ),
             ),

@@ -88,8 +88,7 @@ class ProfileView extends StatelessWidget {
                                           child: CircularProgressIndicator(
                                             value: loadingProgress.expectedTotalBytes != null
                                                 ? loadingProgress.cumulativeBytesLoaded /
-                                                loadingProgress.expectedTotalBytes
-                                                : null,
+                                                loadingProgress.expectedTotalBytes : null,
                                           ),
                                         );
                                       },
@@ -147,8 +146,7 @@ class ProfileView extends StatelessWidget {
                                     child: CircularProgressIndicator(
                                       value: loadingProgress.expectedTotalBytes != null
                                           ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes
-                                          : null,
+                                          loadingProgress.expectedTotalBytes : null,
                                     ),
                                   );
                                 },

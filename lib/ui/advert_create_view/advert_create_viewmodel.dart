@@ -27,7 +27,7 @@ class AdvertCreateViewModel extends BaseViewModel {
         created: DateTime.now().toString(),
       );
       await AdvertService().createAdvert(createAdvert);
-      locator<NavigationService>().clearStackAndShow('/');
+      toHome();
       FocusManager.instance.primaryFocus.unfocus();
       headlineController.clear();
       priceController.clear();
@@ -35,6 +35,12 @@ class AdvertCreateViewModel extends BaseViewModel {
     } catch (e) {
       handleErrorApp(e, _decoder);
     }
+  }
+
+  void toHome() {
+    locator<NavigationService>().clearStackAndShow(
+      '/home',
+    );
   }
 
   void back() {
