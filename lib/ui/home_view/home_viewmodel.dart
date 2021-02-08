@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/exeptions/exception_handler.dart';
 import 'package:g_shop/core/models/advert_model.dart';
 import 'package:g_shop/core/services/advert_service.dart';
@@ -12,12 +13,6 @@ class HomeViewModel extends FutureViewModel {
   final JsonDecoder _decoder = JsonDecoder();
   String currentUserUid = '';
   List<AdvertModel> adverts;
-
-  void toCheckLogin() {
-    locator<NavigationService>().clearStackAndShow(
-      '/check_login',
-    );
-  }
 
   @override
   Future futureToRun() async {
@@ -34,11 +29,10 @@ class HomeViewModel extends FutureViewModel {
   }
 
   void toMyProfile() {
-    locator<NavigationService>().navigateTo('/profile',
-        arguments: ProfileViewArguments(uid: currentUserUid));
+    locator<NavigationService>().navigateTo(routerProfileView, arguments: ProfileViewArguments(uid: currentUserUid));
   }
 
   void toAdvertCreate() {
-    locator<NavigationService>().navigateTo('/advert_create');
+    locator<NavigationService>().navigateTo(routerAdvertCreateView);
   }
 }

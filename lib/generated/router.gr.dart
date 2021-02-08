@@ -123,8 +123,16 @@ class Router extends RouterBase {
       );
     },
     AdvertEditingView: (data) {
+      final args = data.getArgs<AdvertEditingViewArguments>(
+        orElse: () => AdvertEditingViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => AdvertEditingView(),
+        builder: (context) => AdvertEditingView(
+          key: args.key,
+          headline: args.headline,
+          price: args.price,
+          description: args.description,
+        ),
         settings: data,
       );
     },
@@ -141,8 +149,20 @@ class Router extends RouterBase {
       );
     },
     ProfileEditingView: (data) {
+      final args = data.getArgs<ProfileEditingViewArguments>(
+        orElse: () => ProfileEditingViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => ProfileEditingView(),
+        builder: (context) => ProfileEditingView(
+          key: args.key,
+          name: args.name,
+          surname: args.surname,
+          role: args.role,
+          city: args.city,
+          email: args.email,
+          phoneNumber: args.phoneNumber,
+          aboutYourself: args.aboutYourself,
+        ),
         settings: data,
       );
     },
@@ -160,9 +180,40 @@ class AdvertViewArguments {
   AdvertViewArguments({this.key, this.e});
 }
 
+/// AdvertEditingView arguments holder class
+class AdvertEditingViewArguments {
+  final Key key;
+  final String headline;
+  final int price;
+  final String description;
+  AdvertEditingViewArguments(
+      {this.key, this.headline, this.price, this.description});
+}
+
 /// ProfileView arguments holder class
 class ProfileViewArguments {
   final Key key;
   final String uid;
   ProfileViewArguments({this.key, this.uid});
+}
+
+/// ProfileEditingView arguments holder class
+class ProfileEditingViewArguments {
+  final Key key;
+  final String name;
+  final String surname;
+  final String role;
+  final String city;
+  final String email;
+  final String phoneNumber;
+  final String aboutYourself;
+  ProfileEditingViewArguments(
+      {this.key,
+      this.name,
+      this.surname,
+      this.role,
+      this.city,
+      this.email,
+      this.phoneNumber,
+      this.aboutYourself});
 }

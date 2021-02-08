@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/reg_exp.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/ui/register_view/register_viewmodel.dart';
@@ -16,12 +17,12 @@ class RegisterDataView extends StatelessWidget {
       builder: (context, model, _) => Scaffold(
         appBar: AppBar(
           leading: null,
-          title: Text('Registration', style: Theme.of(context).textTheme.headline2),
+          title: Text(textRegistration, style: Theme.of(context).textTheme.headline2),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.clear),
               onPressed: () {},
-              tooltip: 'Cancel Registration',
+              tooltip: textCancelRegistration,
             ),
           ],
         ),
@@ -56,11 +57,11 @@ class RegisterDataView extends StatelessWidget {
                             autofocus: false,
                             decoration: const InputDecoration(
                               counter: Offstage(),
-                              labelText: 'Name',
+                              labelText: textName,
                             ),
                             validator: (v) {
                               if (v.isEmpty) {
-                                return 'Not be empty';
+                                return textNotBeEmpty;
                               } else {
                                 return null;
                               }
@@ -77,11 +78,11 @@ class RegisterDataView extends StatelessWidget {
                               autocorrect: false,
                               decoration: const InputDecoration(
                                 counter: Offstage(),
-                                labelText: 'Surname',
+                                labelText: textSurname,
                               ),
                               validator: (v) {
                                 if (v.isEmpty) {
-                                  return 'Not be empty';
+                                  return textNotBeEmpty;
                                 } else {
                                   return null;
                                 }
@@ -97,11 +98,11 @@ class RegisterDataView extends StatelessWidget {
                             maxLength: 50,
                             decoration: const InputDecoration(
                               counter: Offstage(),
-                              labelText: 'City',
+                              labelText: textCity,
                             ),
                             validator: (v) {
                               if (v.isEmpty) {
-                                return 'Not be empty';
+                                return textNotBeEmpty;
                               } else {
                                 return null;
                               }
@@ -117,14 +118,14 @@ class RegisterDataView extends StatelessWidget {
                               autocorrect: false,
                               autofocus: false,
                               decoration: const InputDecoration(
-                                labelText: 'Phone Number',
+                                labelText: textPhoneNumber,
                               ),
                               validator: (v) {
                                 RegExp regex = RegExp(phoneReg);
                                 if (v.isEmpty) {
-                                  return 'Not be empty';
+                                  return textNotBeEmpty;
                                 } else if (dropFormatMaskedPhone(v).length < 12 || !regex.hasMatch(dropFormatMaskedPhone(v))) {
-                                  return 'Check your phone number';
+                                  return textCheckYourPhone;
                                 } else {
                                   return null;
                                 }
@@ -136,7 +137,7 @@ class RegisterDataView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 30),
                             child: CustomButtonWidget(
-                              'Register',
+                              textRegister,
                               () {
                                 if (model.registerDataFormKey.currentState.validate()) {
                                   model.registerDataEmailPassword();

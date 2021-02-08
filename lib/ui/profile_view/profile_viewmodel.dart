@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/models/theme_model.dart';
 import 'package:g_shop/core/models/user_model.dart';
 import 'package:g_shop/core/services/auth_service.dart';
 import 'package:g_shop/core/services/dependency_injection.dart';
 import 'package:g_shop/core/services/user_service.dart';
 import 'package:g_shop/generated/locator.dart';
+import 'package:g_shop/generated/router.gr.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -39,14 +41,14 @@ class ProfileViewModel extends BaseViewModel {
     currentUserUid = FirebaseAuth.instance.currentUser.uid;
     DocumentSnapshot res = await UserService().getUser(uid);
     user = UserModel(
-      id: res.data()['id'],
-      photo: res.data()['photo'],
-      name: res.data()['name'],
-      surname: res.data()['surname'],
-      city: res.data()['city'],
-      email: res.data()['email'],
-      phoneNumber: res.data()['phoneNumber'],
-      aboutYourself: res.data()['aboutYourself'],
+      id: res.data()[userModelId],
+      photo: res.data()[userModelPhoto],
+      name: res.data()[userModelName],
+      surname: res.data()[userModelSurname],
+      city: res.data()[userModelCity],
+      email: res.data()[userModelEmail],
+      phoneNumber: res.data()[userModelPhoneNumber],
+      aboutYourself: res.data()[userModelAboutYourself],
     );
     setBusy(false);
   }
@@ -54,15 +56,32 @@ class ProfileViewModel extends BaseViewModel {
   void logOut() async {
     await _authService.logOut();
     notifyListeners();
-    locator<NavigationService>().clearStackAndShow('/');
+    locator<NavigationService>().clearStackAndShow(routerAppLoadingView);
   }
 
-  void toProfileEditing() {
-    locator<NavigationService>().navigateTo('/profile_editing');
+  void toProfileEditing({
+    String name,
+    String surname,
+    String city,
+    String email,
+    String phoneNumber,
+    String aboutYourself,
+  }) {
+    locator<NavigationService>().navigateTo(
+      routerProfileEditingView,
+      arguments: ProfileEditingViewArguments(
+        name: name,
+        surname: surname,
+        city: city,
+        email: email,
+        phoneNumber: phoneNumber,
+        aboutYourself: aboutYourself,
+      ),
+    );
   }
 
   void toMyAdverts() {
-    locator<NavigationService>().navigateTo('/my_adverts');
+    locator<NavigationService>().navigateTo(routerMyAdvertsView);
   }
 
   void back() {
@@ -78,11 +97,11 @@ class ProfileViewModel extends BaseViewModel {
   String _getTitleForIndex(int index) {
     switch (index) {
       case 0:
-        return 'Light';
+        return themeLight;
       case 1:
-        return 'Dark';
+        return themeDark;
     }
-    return 'No theme for index';
+    return themeNoTheme;
   }
 
 }

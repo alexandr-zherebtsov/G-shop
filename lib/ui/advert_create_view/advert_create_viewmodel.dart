@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/models/advert_model.dart';
 import 'package:g_shop/core/services/advert_service.dart';
 import 'package:g_shop/generated/locator.dart';
@@ -21,7 +22,7 @@ class AdvertCreateViewModel extends BaseViewModel {
       var createAdvert = AdvertModel(
         uid: FirebaseAuth.instance.currentUser.uid,
         headline: headlineController.text,
-        prise: int.parse(priceController.text),
+        price: int.parse(priceController.text),
         images: [],
         description: descriptionController.text,
         created: DateTime.now().toString(),
@@ -38,9 +39,7 @@ class AdvertCreateViewModel extends BaseViewModel {
   }
 
   void toHome() {
-    locator<NavigationService>().clearStackAndShow(
-      '/home',
-    );
+    locator<NavigationService>().clearStackAndShow(routerHomeView);
   }
 
   void back() {

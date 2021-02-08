@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/localization.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/exeptions/exception_handler.dart';
 import 'package:g_shop/core/models/user_model.dart';
 import 'package:g_shop/core/services/auth_service.dart';
@@ -42,13 +44,13 @@ class RegisterViewModel extends BaseViewModel {
       await _authService.registerEmailPassword(emailController.text, passwordController.text);
       if (FirebaseAuth.instance.currentUser != null) {
         getEmail();
-        locator<NavigationService>().clearStackAndShow('/register_data');
+        locator<NavigationService>().clearStackAndShow(routerRegisterDataView);
         FocusManager.instance.primaryFocus.unfocus();
         emailController.clear();
         passwordController.clear();
       }
     } catch (e) {
-      showToast('Wrong data', redColor, whiteColor);
+      showToast(textWrongData, redColor, whiteColor);
       handleErrorApp(e, _decoder);
     }
   }
@@ -66,7 +68,7 @@ class RegisterViewModel extends BaseViewModel {
         aboutYourself: '',
       ).toFirebase();
       await UserService().createUser(userReg);
-      locator<NavigationService>().clearStackAndShow('/');
+      locator<NavigationService>().clearStackAndShow(routerAppLoadingView);
       FocusManager.instance.primaryFocus.unfocus();
       nameController.clear();
       surnameController.clear();

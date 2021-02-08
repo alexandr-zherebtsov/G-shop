@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/localization.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/core/models/advert_model.dart';
 import 'package:g_shop/ui/advert_view/advert_view_model.dart';
@@ -20,24 +22,24 @@ class AdvertView extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            tooltip: 'Back',
+            tooltip: textBack,
             onPressed: () => model.back(),
           ),
           title: Text(
-            e.uid == model.uid ? 'Your Advert' : 'Advert',
+            e.uid == model.uid ? textYourAdvert : textAdvert,
             style: Theme.of(context).textTheme.headline2,
           ),
           actions: e.uid == model.uid ? <Widget>[
             IconButton(
               icon: Icon(Icons.edit),
-              onPressed: () => model.advertEditing(),
-              tooltip: 'Edit Your Advert',
+              onPressed: () => model.advertEditing(e.headline, e.price, e.description),
+              tooltip: textEditYourAdvert,
             ),
           ] : e.uid != model.uid && MediaQuery.of(context).size.width > MediaQuery.of(context).size.height ?
           <Widget>[
             FlatButton(
               child: Text(
-                'Show Contact',
+                textShowContact,
                 style: Theme.of(context).textTheme.headline3.copyWith(color: whiteColor),
               ),
               onPressed: () => model.toProfile(e.uid),
@@ -50,13 +52,13 @@ class AdvertView extends StatelessWidget {
             child: Column(
               children: [
                 Hero(
-                  tag: e.id + 'photo',
+                  tag: e.id + heroPhoto,
                   child: Container(
                     height: MediaQuery.of(context).size.width,
                     width: MediaQuery.of(context).size.width,
                     color: blackColor.withOpacity(0.1),
                     child: Image.network(
-                      'https://cdn.shopify.com/s/files/1/1140/2426/products/Gibson-USA-Les-Paul-Standard-Electric-Guitar-Heritage-Cherry-Sunburst-11252_1600x1600.jpg?v=1588348769',
+                      testingImage,
                       key: UniqueKey(),
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
@@ -88,15 +90,15 @@ class AdvertView extends StatelessWidget {
                               maxWidth: MediaQuery.of(context).size.width - 130,
                             ),
                             child: Hero(
-                              tag: e.id + 'headline',
+                              tag: e.id + heroHeadline,
                               child: HeadlineWidget(e.headline, Theme.of(context).textTheme.headline1),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: Hero(
-                              tag: e.id + 'price',
-                              child: PriceWidget(e.prise.toString()),
+                              tag: e.id + heroPrice,
+                              child: PriceWidget(e.price.toString()),
                             ),
                           ),
                         ],
@@ -106,14 +108,14 @@ class AdvertView extends StatelessWidget {
                         child: SizedBox(
                           width: double.infinity,
                           child: Hero(
-                            tag:  e.id + 'description',
+                            tag:  e.id + heroDescription,
                             child: Text(e.description, style: Theme.of(context).textTheme.bodyText1),
                           ),
                         ),
                       ),
                       e.uid == model.uid ? Offstage() : Padding(
                         padding: const EdgeInsets.symmetric(vertical: 11),
-                        child: CustomButtonWidget('Show Contact', () => model.toProfile(e.uid)),
+                        child: CustomButtonWidget(textShowContact, () => model.toProfile(e.uid)),
                       ),
                     ],
                   ),
@@ -126,12 +128,12 @@ class AdvertView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
-              tag: e.id + 'photo',
+              tag: e.id + heroPhoto,
               child: Container(
                 width: MediaQuery.of(context).size.height,
                 color: blackColor.withOpacity(0.1),
                 child: Image.network(
-                  'https://cdn.shopify.com/s/files/1/1140/2426/products/Gibson-USA-Les-Paul-Standard-Electric-Guitar-Heritage-Cherry-Sunburst-11252_1600x1600.jpg?v=1588348769',
+                  testingImage,
                   key: UniqueKey(),
                   loadingBuilder: (BuildContext context, Widget child,
                       ImageChunkEvent loadingProgress) {
@@ -166,15 +168,15 @@ class AdvertView extends StatelessWidget {
                             maxWidth: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.height + 20),
                           ),
                           child: Hero(
-                            tag: e.id + 'headline',
+                            tag: e.id + heroHeadline,
                             child: HeadlineWidget(e.headline, Theme.of(context).textTheme.headline1),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
                           child: Hero(
-                            tag: e.id + 'price',
-                            child: PriceWidget(e.prise.toString()),
+                            tag: e.id + heroPrice,
+                            child: PriceWidget(e.price.toString()),
                           ),
                         ),
                         Padding(
@@ -182,7 +184,7 @@ class AdvertView extends StatelessWidget {
                           child: SizedBox(
                             width: double.infinity,
                             child: Hero(
-                              tag:  e.id + 'description',
+                              tag:  e.id + heroDescription,
                               child: Text(e.description, style: Theme.of(context).textTheme.bodyText1),
                             ),
                           ),

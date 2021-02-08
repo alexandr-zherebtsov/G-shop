@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:stacked/stacked.dart';
 
@@ -78,7 +79,7 @@ class _FirstProgressScreenState extends State<FirstProgressScreen> with SingleTi
                     maxWidth: 500,
                     maxHeight: 500,
                   ),
-                  child: Image.asset('assets/icons/big_logo.png'),
+                  child: Image.asset(imgBigLogo),
                 ),
               ],
             ),

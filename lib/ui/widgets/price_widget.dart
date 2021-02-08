@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/strings.dart';
 
 class PriceWidget extends StatelessWidget {
   final String title;
@@ -19,7 +20,7 @@ class PriceWidget extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          '$title \$',
+          '$title $markDollar',
           style: Theme.of(context).textTheme.headline3.copyWith(color: whiteColor),
         ),
       ),

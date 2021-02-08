@@ -2,7 +2,7 @@ class AdvertModel {
   final String id;
   final String uid;
   final String headline;
-  final int prise;
+  final int price;
   final String description;
   final List<dynamic> images;
   final String created;
@@ -11,7 +11,7 @@ class AdvertModel {
     this.id,
     this.uid,
     this.headline,
-    this.prise,
+    this.price,
     this.description,
     this.images,
     this.created,

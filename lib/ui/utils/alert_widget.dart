@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/generated/locator.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -15,12 +16,12 @@ void showAlert(BuildContext context, String headline, String title, Function fun
       content: Text(title),
       actions: [
         FlatButton(
-          child: Text('Cancel', style: Theme.of(context).textTheme.bodyText1),
+          child: Text(textCancel, style: Theme.of(context).textTheme.bodyText1),
           splashColor: transparentLightGreen,
           onPressed: () => locator<NavigationService>().back(),
         ),
         FlatButton(
-          child: Text('Delete', style: Theme.of(context).textTheme.bodyText1.copyWith(color: redColor)),
+          child: Text(textDelete, style: Theme.of(context).textTheme.bodyText1.copyWith(color: redColor)),
           splashColor: transparentLightGreen,
           onPressed: function,
         ),

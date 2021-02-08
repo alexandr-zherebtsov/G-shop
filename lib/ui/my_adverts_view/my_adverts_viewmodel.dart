@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/models/advert_model.dart';
 import 'package:g_shop/core/services/advert_service.dart';
 import 'package:g_shop/generated/locator.dart';
@@ -23,7 +24,6 @@ class MyAdvertsViewModel extends FutureViewModel {
     } catch (e) {
       handleErrorApp(e, _decoder);
     }
-
   }
 
   void back() {
@@ -31,10 +31,10 @@ class MyAdvertsViewModel extends FutureViewModel {
   }
 
   void advert() {
-    locator<NavigationService>().navigateTo('/advert');
+    locator<NavigationService>().navigateTo(routerAdvertView);
   }
 
   void advertCreate() {
-    locator<NavigationService>().navigateTo('/advert_create');
+    locator<NavigationService>().navigateTo(routerAdvertCreateView);
   }
 }

@@ -34,7 +34,7 @@ class UserService {
     return await _db.collection('adverts').add({
       'uid': createAdvert.uid,
       'headline': createAdvert.headline,
-      'prise': createAdvert.prise,
+      'price': createAdvert.price,
       'description': createAdvert.description,
       'images': createAdvert.images,
     }).catchError((e) {

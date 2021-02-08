@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/models/advert_model.dart';
 import 'package:g_shop/generated/locator.dart';
 import 'package:g_shop/generated/router.gr.dart';
@@ -26,7 +27,7 @@ class CardWidget extends StatelessWidget {
         child: Card(
           margin: const EdgeInsets.all(3.0),
           child: InkWell(
-            onTap: () => locator<NavigationService>().navigateTo('/advert', arguments: AdvertViewArguments(e: e)),
+            onTap: () => locator<NavigationService>().navigateTo(routerAdvertView, arguments: AdvertViewArguments(e: e)),
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: Row(
@@ -34,16 +35,15 @@ class CardWidget extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Hero(
-                      tag: e.id + 'photo',
+                      tag: e.id + heroPhoto,
                       child: Container(
                         height: 140,
                         width: 140,
                         color: blackColor.withOpacity(0.1),
                         child: Image.network(
-                          'https://cdn.shopify.com/s/files/1/1140/2426/products/Gibson-USA-Les-Paul-Standard-Electric-Guitar-Heritage-Cherry-Sunburst-11252_1600x1600.jpg?v=1588348769',
+                          testingImage,
                           key: UniqueKey(),
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent loadingProgress) {
+                          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
                             if (loadingProgress == null) return child;
                             return Center(
                               child: CircularProgressIndicator(
@@ -71,11 +71,11 @@ class CardWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Hero(
-                            tag: e.id + 'headline',
+                            tag: e.id + heroHeadline,
                             child: HeadlineWidget(e.headline, Theme.of(context).textTheme.headline1),
                           ),
                           Hero(
-                            tag: e.id + 'description',
+                            tag: e.id + heroDescription,
                             child: Text(
                               e.description,
                               style: Theme.of(context).textTheme.bodyText2,
@@ -87,8 +87,8 @@ class CardWidget extends StatelessWidget {
                           Align(
                             alignment: Alignment.bottomRight,
                             child: Hero(
-                              tag: e.id + 'price',
-                              child: PriceWidget(e.prise.toString()),
+                              tag: e.id + heroPrice,
+                              child: PriceWidget(e.price.toString()),
                             ),
                           ),
                         ],

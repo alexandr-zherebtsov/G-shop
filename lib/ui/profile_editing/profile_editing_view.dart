@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/localization.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/ui/profile_editing/profile_editing_viewmodel.dart';
 import 'package:g_shop/ui/utils/alert_widget.dart';
@@ -8,6 +10,26 @@ import 'package:g_shop/ui/widgets/custom_button_widget.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class ProfileEditingView extends StatelessWidget {
+
+  final String name;
+  final String surname;
+  final String role;
+  final String city;
+  final String email;
+  final String phoneNumber;
+  final String aboutYourself;
+
+  const ProfileEditingView({
+    Key key,
+    this.name,
+    this.surname,
+    this.role,
+    this.city,
+    this.email,
+    this.phoneNumber,
+    this.aboutYourself,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilderConnect<ProfileEditingViewModel>.reactive(
@@ -16,22 +38,22 @@ class ProfileEditingView extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            tooltip: 'Back',
+            tooltip: textBack,
             onPressed: () => model.back(),
           ),
-          title: Text('Profile Editing', style: Theme.of(context).textTheme.headline2),
+          title: Text(textProfileEditing, style: Theme.of(context).textTheme.headline2),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.delete_outline_outlined),
               onPressed: () {
                 showAlert(
                   context,
-                  'Delete Account?',
-                  'Do you really want to delete this acсount? It cannot be restored!',
-                   () => print('Delete Account'),
+                  textDeleteAccount + markQuestion,
+                  textDescriptionDeleteAccount,
+                   () => print(textDeleteAccount),
                 );
               },
-              tooltip: 'Delete Account',
+              tooltip: textDeleteAccount,
             ),
           ],
         ),
@@ -49,56 +71,56 @@ class ProfileEditingView extends StatelessWidget {
                         sizingInformation.isTablet || sizingInformation.isDesktop ?
                         SizedBox(height: 30) : Offstage(),
                         TextFormField(
-                          controller: model.nameController,
+                          controller: model.nameController..text = name,
                           cursorColor: Theme.of(context).accentColor,
                           maxLength: 35,
                           autofocus: false,
                           decoration: const InputDecoration(
-                            labelText: 'Name',
+                            labelText: textName,
                           ),
                           keyboardType: TextInputType.text,
                           autocorrect: false,
                         ),
                         TextFormField(
-                          controller: model.surnameController,
+                          controller: model.surnameController..text = surname,
                           cursorColor: Theme.of(context).accentColor,
                           maxLength: 35,
                           autofocus: false,
                           decoration: const InputDecoration(
-                            labelText: 'Surname',
+                            labelText: textSurname,
                           ),
                           keyboardType: TextInputType.text,
                           autocorrect: false,
                         ),
                         TextFormField(
-                          controller: model.cityController,
+                          controller: model.cityController..text = city,
                           cursorColor: Theme.of(context).accentColor,
                           maxLength: 50,
                           autofocus: false,
                           decoration: const InputDecoration(
-                            labelText: 'City',
+                            labelText: textCity,
                           ),
                           keyboardType: TextInputType.text,
                           autocorrect: false,
                         ),
                         TextFormField(
-                          controller: model.emailController,
+                          controller: model.emailController..text = email,
                           cursorColor: Theme.of(context).accentColor,
                           maxLength: 50,
                           autofocus: false,
                           decoration: const InputDecoration(
-                            labelText: 'Email',
+                            labelText: textEmail,
                           ),
                           keyboardType: TextInputType.emailAddress,
                           autocorrect: false,
                         ),
                         TextFormField(
-                          controller: model.phoneNumberController,
+                          controller: model.phoneNumberController..text = phoneNumber,
                           cursorColor: Theme.of(context).accentColor,
                           maxLength: 13,
                           autofocus: false,
                           decoration: const InputDecoration(
-                            labelText: 'Phone Number',
+                            labelText: textPhoneNumber,
                           ),
                           keyboardType: TextInputType.phone,
                           autocorrect: false,
@@ -106,7 +128,7 @@ class ProfileEditingView extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 40.0),
                           child: TextFormField(
-                            controller: model.aboutYourselfController,
+                            controller: model.aboutYourselfController..text = aboutYourself,
                             cursorColor: Theme.of(context).accentColor,
                             maxLength: 500,
                             keyboardType: TextInputType.text,
@@ -115,7 +137,7 @@ class ProfileEditingView extends StatelessWidget {
                             minLines: 1,
                             maxLines: 15,
                             decoration: InputDecoration(
-                              labelText: 'About Yourself',
+                              labelText: textAboutYourself,
                               errorText: null,
                               errorStyle: const TextStyle(color: redColor),
                               enabledBorder: OutlineInputBorder(
@@ -140,7 +162,7 @@ class ProfileEditingView extends StatelessWidget {
                         sizingInformation.isTablet || sizingInformation.isDesktop ?
                         SizedBox(height: 50) : Offstage(),
                         Center(
-                          child: CustomButtonWidget('Save', () => print('Save')),
+                          child: CustomButtonWidget(textSave, () => print(textSave)),
                         ),
                       ],
                     ),

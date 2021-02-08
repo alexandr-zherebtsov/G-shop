@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/localization.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/ui/home_view/home_viewmodel.dart';
 import 'package:g_shop/ui/utils/progress_screen.dart';
@@ -16,20 +18,20 @@ class HomeView extends StatelessWidget {
       builder: (context, model, _) => model.isBusy? ProgressScreen() : ResponsiveBuilder(
         builder: (context, sizingInformation) => Scaffold(
           appBar: AppBar(
-            title: Text('Home', style: Theme.of(context).textTheme.headline2),
+            title: Text(textHome, style: Theme.of(context).textTheme.headline2),
             leading: null,
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.person),
                 onPressed: () => model.toMyProfile(),
-                tooltip: 'Your Profile',
+                tooltip: textYourProfile,
               ),
             ],
           ),
           body: model.adverts == null || model.adverts.isEmpty ?
           ExceptionWidget(
-            title: 'No adverts',
-            img: 'assets/images/guitar_vector.png',
+            title: textNoAdverts,
+            img: imgGuitarVector,
             isError: false,
           ) : ScrollConfiguration(
             behavior: MyBehavior(),
@@ -48,9 +50,9 @@ class HomeView extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            heroTag: 'buttonCreateAdvert',
+            heroTag: heroButtonCreateAdvert,
             backgroundColor: Theme.of(context).buttonColor,
-            tooltip: 'Create Advert',
+            tooltip: textCreateAdvert,
             child: Container(
               width: double.infinity,
               height: double.infinity,

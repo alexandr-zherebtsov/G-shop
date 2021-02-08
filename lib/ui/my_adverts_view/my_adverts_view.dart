@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/localization.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/ui/my_adverts_view/my_adverts_viewmodel.dart';
 import 'package:g_shop/ui/utils/progress_screen.dart';
@@ -18,15 +20,15 @@ class MyAdvertsView extends StatelessWidget {
           appBar: AppBar(
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
-              tooltip: 'Back',
+              tooltip: textBack,
               onPressed: () => model.back(),
             ),
-            title: Text('Your Adverts', style: Theme.of(context).textTheme.headline2),
+            title: Text(textYourAdverts, style: Theme.of(context).textTheme.headline2),
           ),
           body: model.myAdverts == null || model.myAdverts.isEmpty ?
           ExceptionWidget(
-            title: 'You have no adverts',
-            img: 'assets/images/guitar_vector.png',
+            title: textYouHaveNoAdverts,
+            img: imgGuitarVector,
             isError: false,
           ) : ScrollConfiguration(
             behavior: MyBehavior(),
@@ -44,9 +46,9 @@ class MyAdvertsView extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            heroTag: 'buttonCreateAdvert',
+            heroTag: heroButtonCreateAdvert,
             backgroundColor: Theme.of(context).buttonColor,
-            tooltip: 'Create Advert',
+            tooltip: textCreateAdvert,
             child: Material(
               color: transparentColor,
               child: Container(

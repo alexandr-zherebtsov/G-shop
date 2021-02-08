@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/reg_exp.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/ui/register_view/register_viewmodel.dart';
@@ -15,11 +16,11 @@ class RegisterView extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            tooltip: 'Back',
+            tooltip: textBack,
             onPressed: () => model.back(),
           ),
           title: Text(
-            'Registration',
+            textRegistration,
             style: Theme.of(context).textTheme.headline2,
           ),
         ),
@@ -46,14 +47,14 @@ class RegisterView extends StatelessWidget {
                             autofocus: false,
                             decoration: const InputDecoration(
                               icon: const Icon(Icons.email),
-                              labelText: 'Email',
+                              labelText: textEmail,
                             ),
                             validator: (v) {
                               RegExp regex = RegExp(emailReg);
                               if (v.isEmpty) {
-                                return 'Not be empty';
+                                return textNotBeEmpty;
                               } else if (!regex.hasMatch(v)) {
-                                return 'Check your email';
+                                return textCheckYourEmail;
                               } else {
                                 return null;
                               }
@@ -70,13 +71,13 @@ class RegisterView extends StatelessWidget {
                               autofocus: false,
                               decoration: const InputDecoration(
                                 icon: const Icon(Icons.lock),
-                                labelText: 'Password',
+                                labelText: textPassword,
                               ),
                               validator: (v) {
                                 if (v.isEmpty) {
-                                  return 'Not be empty';
+                                  return textNotBeEmpty;
                                 } else if (v.length < 4) {
-                                  return 'At least 4 characters';
+                                  return text4Characters;
                                 } else {
                                   return null;
                                 }
@@ -86,7 +87,7 @@ class RegisterView extends StatelessWidget {
                           sizingInformation.isTablet || sizingInformation.isDesktop ?
                           SizedBox(height: 100) : Offstage(),
                           CustomButtonWidget(
-                            'Continue',
+                            textContinue,
                             () {
                               if (model.registerFormKey.currentState.validate()) {
                                 model.registerEmailPassword();

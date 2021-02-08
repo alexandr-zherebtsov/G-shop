@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/reg_exp.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/ui/advert_create_view/advert_create_viewmodel.dart';
@@ -17,10 +18,10 @@ class AdvertCreateView extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            tooltip: 'Back',
+            tooltip: textBack,
             onPressed: () => model.back(),
           ),
-          title: Text('Create Advert', style: Theme.of(context).textTheme.headline2),
+          title: Text(textCreateAdvert, style: Theme.of(context).textTheme.headline2),
         ),
         body: ScrollConfiguration(
           behavior: MyBehavior(),
@@ -36,8 +37,7 @@ class AdvertCreateView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          sizingInformation.isTablet || sizingInformation.isDesktop ?
-                          SizedBox(height: 30) : Offstage(),
+                          sizingInformation.isTablet || sizingInformation.isDesktop ? SizedBox(height: 30) : Offstage(),
                           TextFormField(
                             controller: model.headlineController,
                             cursorColor: Theme.of(context).accentColor,
@@ -45,10 +45,10 @@ class AdvertCreateView extends StatelessWidget {
                             autocorrect: false,
                             autofocus: false,
                             maxLength: 100,
-                            decoration: const InputDecoration(labelText: 'Headline'),
+                            decoration: const InputDecoration(labelText: textHeadline),
                             validator: (v) {
                               if (v.isEmpty) {
-                                return 'Not be empty';
+                                return textNotBeEmpty;
                               } else {
                                 return null;
                               }
@@ -62,10 +62,10 @@ class AdvertCreateView extends StatelessWidget {
                             autofocus: false,
                             maxLength: 7,
                             inputFormatters: [FilteringTextInputFormatter.allow(RegExp(numberReg))],
-                            decoration: const InputDecoration(labelText: 'Price'),
+                            decoration: const InputDecoration(labelText: textPrice),
                             validator: (v) {
                               if (v.isEmpty) {
-                                return 'Not be empty';
+                                return textNotBeEmpty;
                               } else {
                                 return null;
                               }
@@ -74,7 +74,7 @@ class AdvertCreateView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 20.0),
                             child: Text(
-                              'Add Photos',
+                              textAddPhotos,
                               style: Theme.of(context).textTheme.headline3.copyWith(
                                 color: Theme.of(context).brightness == Brightness.light ? grayColor_1 : grayColor_2,
                               ),
@@ -116,7 +116,7 @@ class AdvertCreateView extends StatelessWidget {
                               minLines: 1,
                               maxLines: 15,
                               decoration: InputDecoration(
-                                labelText: 'Description',
+                                labelText: textDescription,
                                 errorText: null,
                                 errorStyle: const TextStyle(color: redColor),
                                 enabledBorder: OutlineInputBorder(
@@ -138,20 +138,19 @@ class AdvertCreateView extends StatelessWidget {
                               ),
                               validator: (v) {
                                 if (v.isEmpty) {
-                                  return 'Not be empty';
+                                  return textNotBeEmpty;
                                 } else {
                                   return null;
                                 }
                               },
                             ),
                           ),
-                          sizingInformation.isTablet || sizingInformation.isDesktop ?
-                          SizedBox(height: 50) : Offstage(),
+                          sizingInformation.isTablet || sizingInformation.isDesktop ? SizedBox(height: 50) : Offstage(),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 30.0),
                             child: Center(
                               child: CustomButtonWidget(
-                                'Create',
+                                textCreate,
                                 () {
                                   if (model.createAdvertDataFormKey.currentState.validate()) {
                                     model.createAdvertData();

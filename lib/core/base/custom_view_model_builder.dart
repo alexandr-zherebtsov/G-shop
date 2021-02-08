@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:g_shop/constants/localization.dart';
+import 'package:g_shop/constants/strings.dart';
+import 'package:g_shop/ui/widgets/exception_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
@@ -244,26 +247,13 @@ class _ViewModelBuilderState<T extends ChangeNotifier>
   }
 
   Widget withoutInternet() {
-    return Scaffold(
-      body: Stack(children: [
-        Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      "Network error",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                  ),
-                )
-              ],
-            )),
-      ]),
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: ExceptionWidget(
+        title: textNetworkError,
+        img: imgDrumsVector,
+        isError: true,
+      ),
     );
   }
 }

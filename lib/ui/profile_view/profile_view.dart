@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/localization.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/ui/profile_view/profile_viewmodel.dart';
 import 'package:g_shop/ui/utils/other_utils.dart';
@@ -26,22 +28,29 @@ class ProfileView extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () => model.back(),
-              tooltip: 'Back',
+              tooltip: textBack,
             ),
             title: Text(
-              model.currentUserUid == uid ? 'Your Profile' : 'Profile',
+              model.currentUserUid == uid ? textYourProfile : textProfile,
               style: Theme.of(context).textTheme.headline2,
             ),
             actions: model.currentUserUid == uid ? <Widget>[
               IconButton(
                 icon: Icon(Icons.assignment_outlined),
                 onPressed: () => model.toMyAdverts(),
-                tooltip: 'Your Adverts',
+                tooltip: textYourAdverts,
               ),
               IconButton(
                 icon: Icon(Icons.edit),
-                onPressed: () => model.toProfileEditing(),
-                tooltip: 'Edit Profile',
+                onPressed: () => model.toProfileEditing(
+                  name: model.user.name,
+                  surname: model.user.surname,
+                  city: model.user.city,
+                  email: model.user.email,
+                  phoneNumber: model.user.phoneNumber,
+                  aboutYourself: model.user.aboutYourself,
+                ),
+                tooltip: textEditProfile,
               ),
             ] : null,
           ),
@@ -62,7 +71,7 @@ class ProfileView extends StatelessWidget {
                           hoverColor: transparentColor,
                           splashColor: transparentColor,
                           highlightColor: transparentColor,
-                          onTap: () => print('Change Avatar'),
+                          onTap: () => print(textChangeAvatar),
                           child: SizedBox(
                             height: sizingInformation.isTablet || sizingInformation.isDesktop ? 300 : 128,
                             width: sizingInformation.isTablet || sizingInformation.isDesktop ? 300 : 128,
@@ -190,9 +199,9 @@ class ProfileView extends StatelessWidget {
                     SizedBox(
                       height: sizingInformation.isTablet || sizingInformation.isDesktop ? 30 : 15,
                     ),
-                    model.user.email.isEmpty ? Offstage() : ProfileTextWidget('Email:', model.user.email),
-                    model.user.phoneNumber.isEmpty ? Offstage() : ProfileTextWidget('Phone Number:', formatMaskedPhone(model.user.phoneNumber)),
-                    model.user.aboutYourself.isEmpty ? Offstage() : ProfileTextWidget('About Yourself:', model.user.aboutYourself),
+                    model.user.email.isEmpty ? Offstage() : ProfileTextWidget(textEmail + markColon, model.user.email),
+                    model.user.phoneNumber.isEmpty ? Offstage() : ProfileTextWidget(textPhoneNumber + markColon, formatMaskedPhone(model.user.phoneNumber)),
+                    model.user.aboutYourself.isEmpty ? Offstage() : ProfileTextWidget(textAboutYourself + markColon, model.user.aboutYourself),
                     model.currentUserUid == uid ? InkWell(
                       focusColor: transparentColor,
                       hoverColor: transparentColor,
@@ -218,7 +227,7 @@ class ProfileView extends StatelessWidget {
                               color: Theme.of(context).iconTheme.color,
                             ),
                           ),
-                          Text('Change Theme', style: Theme.of(context).textTheme.headline3),
+                          Text(textChangeTheme, style: Theme.of(context).textTheme.headline3),
                         ],
                       ),
                       onTap: () => getThemeManager(context).selectThemeAtIndex(Theme.of(context).brightness == Brightness.light ? 0 : 1),
@@ -226,7 +235,7 @@ class ProfileView extends StatelessWidget {
                     SizedBox(height: 50),
                     Center(
                       child: CustomButtonWidget(
-                        model.currentUserUid == uid ? 'Log Out' : 'Call',
+                        model.currentUserUid == uid ? textLogOut : textCall,
                         model.currentUserUid == uid ? () => model.logOut() : () => model.numFun(model.user.phoneNumber),
                       ),
                     ),

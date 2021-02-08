@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/localization.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/exeptions/exception_handler.dart';
 import 'package:g_shop/core/services/auth_service.dart';
 import 'package:g_shop/core/services/dependency_injection.dart';
@@ -23,16 +25,16 @@ class LogInViewModel extends BaseViewModel {
     try {
       await _authService.signInEmailPassword(emailController.text, passwordController.text);
       if (FirebaseAuth.instance.currentUser != null) {
-        locator<NavigationService>().clearStackAndShow('/');
+        locator<NavigationService>().clearStackAndShow(routerAppLoadingView);
       }
     } catch (e) {
-      showToast('Wrong data', redColor, whiteColor);
+      showToast(textWrongData, redColor, whiteColor);
       handleErrorApp(e, _decoder);
     }
   }
 
   goToRegister() async {
-    locator<NavigationService>().navigateTo('/register');
+    locator<NavigationService>().navigateTo(routerRegisterView);
     FocusManager.instance.primaryFocus.unfocus();
     emailController.clear();
     passwordController.clear();
