@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/reg_exp.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/ui/register_view/register_viewmodel.dart';
+import 'package:g_shop/ui/utils/alert_widget.dart';
 import 'package:g_shop/ui/utils/other_utils.dart';
 import 'package:g_shop/ui/utils/scroll_custom.dart';
 import 'package:g_shop/ui/widgets/custom_button_widget.dart';
@@ -21,7 +23,14 @@ class RegisterDataView extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.clear),
-              onPressed: () {},
+              onPressed: () => showPasswordAlert(
+                context,
+                textDeleteAccount + markQuestion,
+                textDescriptionDeleteAccount,
+                () => model.deleteUser(model.getEmail()),
+                model.deletePasswordController,
+                model.deleteFormKey,
+              ),
               tooltip: textCancelRegistration,
             ),
           ],
@@ -136,7 +145,7 @@ class RegisterDataView extends StatelessWidget {
                           SizedBox(height: 50) : Offstage(),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 30),
-                            child: CustomButtonWidget(
+                            child: CustomButton(
                               textRegister,
                               () {
                                 if (model.registerDataFormKey.currentState.validate()) {

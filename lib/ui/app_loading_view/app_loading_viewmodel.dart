@@ -1,18 +1,19 @@
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:g_shop/constants/strings.dart';
-import 'package:g_shop/core/exeptions/exception_handler.dart';
 import 'package:g_shop/core/models/user_model.dart';
 import 'package:g_shop/core/services/user_service.dart';
 import 'package:g_shop/generated/locator.dart';
+import 'package:g_shop/generated/router.gr.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class AppLoadingViewModel extends BaseViewModel {
-  final JsonDecoder _decoder = JsonDecoder();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  UserService _userService = UserService();
   UserModel user;
-  var currentUser;
+  User currentUser;
+  bool isUser = false;
 
   init() async {
     await initUser();
@@ -28,10 +29,11 @@ class AppLoadingViewModel extends BaseViewModel {
 
   initUser() async {
     try {
-      currentUser = FirebaseAuth.instance.currentUser;
+      currentUser = _firebaseAuth.currentUser;
       if (currentUser != null) {
         final uid = currentUser.uid;
-        DocumentSnapshot res = await UserService().getUser(uid);
+        DocumentSnapshot res = await _userService.getUser(uid);
+        res == null ? user = null :
         user = UserModel(
           id: res.data()[userModelId],
           photo: res.data()[userModelPhoto],
@@ -44,7 +46,7 @@ class AppLoadingViewModel extends BaseViewModel {
         );
       }
     } catch (e) {
-      handleErrorApp(e, _decoder);
+      print(e);
     }
   }
 
@@ -57,6 +59,9 @@ class AppLoadingViewModel extends BaseViewModel {
   }
 
   void toHome() {
-    locator<NavigationService>().clearStackAndShow(routerHomeView);
+    locator<NavigationService>().clearStackAndShow(
+      routerHomeView,
+      arguments: HomeViewArguments(pageIndex: 0),
+    );
   }
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-showToast(String text, Color bgColor, Color textColor) {
+void showToast(String text, Color bgColor, Color textColor) {
   Fluttertoast.showToast(
     msg: text,
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.CENTER,
-    timeInSecForIosWeb: 1,
+    timeInSecForIosWeb: 2,
     backgroundColor: bgColor,
     textColor: textColor,
     fontSize: 16.0,

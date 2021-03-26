@@ -38,7 +38,8 @@ List<ThemeData> getThemes() {
       accentColor: lightGreen,
       primaryColor: blackGrayColor,
       scaffoldBackgroundColor: mediumGray,
-      cardColor: mediumGray,
+      cardColor: grayColor_3,
+      dividerColor: whiteColor,
     ),
     ThemeData(
       brightness: brightnessLight,
@@ -76,6 +77,7 @@ List<ThemeData> getThemes() {
       primaryColor: lightGreen,
       scaffoldBackgroundColor: whiteGray,
       cardColor: whiteColor,
+      dividerColor: blackColor,
     ),
   ];
 }

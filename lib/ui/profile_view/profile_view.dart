@@ -25,10 +25,10 @@ class ProfileView extends StatelessWidget {
       builder: (context, model, _) => model.isBusy? ProgressScreen() : model.isBusy ? ProgressScreen() : ResponsiveBuilder(
         builder: (context, sizingInformation) => Scaffold(
           appBar: AppBar(
-            leading: IconButton(
+            automaticallyImplyLeading: false,
+            leading: model.currentUserUid == uid ? null : IconButton(
               icon: Icon(Icons.arrow_back),
-              onPressed: () => model.back(),
-              tooltip: textBack,
+              onPressed: () => model.goBack(),
             ),
             title: Text(
               model.currentUserUid == uid ? textYourProfile : textProfile,
@@ -36,20 +36,8 @@ class ProfileView extends StatelessWidget {
             ),
             actions: model.currentUserUid == uid ? <Widget>[
               IconButton(
-                icon: Icon(Icons.assignment_outlined),
-                onPressed: () => model.toMyAdverts(),
-                tooltip: textYourAdverts,
-              ),
-              IconButton(
                 icon: Icon(Icons.edit),
-                onPressed: () => model.toProfileEditing(
-                  name: model.user.name,
-                  surname: model.user.surname,
-                  city: model.user.city,
-                  email: model.user.email,
-                  phoneNumber: model.user.phoneNumber,
-                  aboutYourself: model.user.aboutYourself,
-                ),
+                onPressed: () => model.toProfileEditing(user: model.user),
                 tooltip: textEditProfile,
               ),
             ] : null,
@@ -234,7 +222,7 @@ class ProfileView extends StatelessWidget {
                     ) : Offstage(),
                     SizedBox(height: 50),
                     Center(
-                      child: CustomButtonWidget(
+                      child: CustomButton(
                         model.currentUserUid == uid ? textLogOut : textCall,
                         model.currentUserUid == uid ? () => model.logOut() : () => model.numFun(model.user.phoneNumber),
                       ),

@@ -86,7 +86,7 @@ class RegisterView extends StatelessWidget {
                           ),
                           sizingInformation.isTablet || sizingInformation.isDesktop ?
                           SizedBox(height: 100) : Offstage(),
-                          CustomButtonWidget(
+                          CustomButton(
                             textContinue,
                             () {
                               if (model.registerFormKey.currentState.validate()) {

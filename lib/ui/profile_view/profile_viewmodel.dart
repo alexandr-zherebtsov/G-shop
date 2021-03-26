@@ -59,33 +59,19 @@ class ProfileViewModel extends BaseViewModel {
     locator<NavigationService>().clearStackAndShow(routerAppLoadingView);
   }
 
-  void toProfileEditing({
-    String name,
-    String surname,
-    String city,
-    String email,
-    String phoneNumber,
-    String aboutYourself,
-  }) {
+  void goBack() {
+    locator<NavigationService>().back();
+  }
+
+  void toProfileEditing({UserModel user}) {
     locator<NavigationService>().navigateTo(
       routerProfileEditingView,
-      arguments: ProfileEditingViewArguments(
-        name: name,
-        surname: surname,
-        city: city,
-        email: email,
-        phoneNumber: phoneNumber,
-        aboutYourself: aboutYourself,
-      ),
+      arguments: ProfileEditingViewArguments(user: user),
     );
   }
 
   void toMyAdverts() {
     locator<NavigationService>().navigateTo(routerMyAdvertsView);
-  }
-
-  void back() {
-    locator<NavigationService>().back();
   }
 
   List<ThemeModel> get themes => List<ThemeModel>.generate(

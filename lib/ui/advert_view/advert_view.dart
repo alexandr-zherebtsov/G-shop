@@ -5,6 +5,7 @@ import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/core/models/advert_model.dart';
 import 'package:g_shop/ui/advert_view/advert_view_model.dart';
+import 'package:g_shop/ui/utils/other_utils.dart';
 import 'package:g_shop/ui/utils/scroll_custom.dart';
 import 'package:g_shop/ui/widgets/custom_button_widget.dart';
 import 'package:g_shop/ui/widgets/headline_widget.dart';
@@ -32,15 +33,19 @@ class AdvertView extends StatelessWidget {
           actions: e.uid == model.uid ? <Widget>[
             IconButton(
               icon: Icon(Icons.edit),
-              onPressed: () => model.advertEditing(e.headline, e.price, e.description),
+              onPressed: () => model.advertEditing(e),
               tooltip: textEditYourAdvert,
             ),
           ] : e.uid != model.uid && MediaQuery.of(context).size.width > MediaQuery.of(context).size.height ?
           <Widget>[
-            FlatButton(
-              child: Text(
-                textShowContact,
-                style: Theme.of(context).textTheme.headline3.copyWith(color: whiteColor),
+            TextButton(
+              style: textButtonStyle(context, isWhite: true),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  textShowContact,
+                  style: Theme.of(context).textTheme.headline3.copyWith(color: whiteColor),
+                ),
               ),
               onPressed: () => model.toProfile(e.uid),
             ),
@@ -115,7 +120,7 @@ class AdvertView extends StatelessWidget {
                       ),
                       e.uid == model.uid ? Offstage() : Padding(
                         padding: const EdgeInsets.symmetric(vertical: 11),
-                        child: CustomButtonWidget(textShowContact, () => model.toProfile(e.uid)),
+                        child: CustomButton(textShowContact, () => model.toProfile(e.uid)),
                       ),
                     ],
                   ),

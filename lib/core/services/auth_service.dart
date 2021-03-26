@@ -7,12 +7,14 @@ class AuthService {
   final JsonDecoder _decoder = JsonDecoder();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future<void> signInEmailPassword(String _email, String _password) async {
+  Future<bool> signInEmailPassword(String _email, String _password) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(email: _email, password: _password);
+      return true;
     }
     catch (e) {
       handleErrorApp(e, _decoder);
+      return false;
     }
   }
 
@@ -27,5 +29,15 @@ class AuthService {
 
   Future<void> logOut() async{
     await _firebaseAuth.signOut();
+  }
+
+  Future<bool> deleteUser(String _password) async {
+    try {
+      await _firebaseAuth.currentUser.delete();
+      return true;
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+      return false;
+    }
   }
 }

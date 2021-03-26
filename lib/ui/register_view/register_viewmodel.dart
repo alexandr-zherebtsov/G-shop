@@ -18,11 +18,13 @@ import 'package:stacked_services/stacked_services.dart';
 class RegisterViewModel extends BaseViewModel {
   final JsonDecoder _decoder = JsonDecoder();
 
-  final registerFormKey = GlobalKey<FormState>();
-  final registerDataFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> registerDataFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> deleteFormKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController deletePasswordController = TextEditingController();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController surnameController = TextEditingController();
@@ -30,10 +32,12 @@ class RegisterViewModel extends BaseViewModel {
   TextEditingController phoneNumberController = TextEditingController();
 
   final AuthService _authService = diContainer.get();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FocusManager _focusManager = FocusManager.instance;
 
   String getEmail() {
     try {
-      return FirebaseAuth.instance.currentUser.email;
+      return _firebaseAuth.currentUser.email;
     } catch (e) {
       return '';
     }
@@ -42,10 +46,10 @@ class RegisterViewModel extends BaseViewModel {
   void registerEmailPassword() async {
     try {
       await _authService.registerEmailPassword(emailController.text, passwordController.text);
-      if (FirebaseAuth.instance.currentUser != null) {
+      if (_firebaseAuth.currentUser != null) {
         getEmail();
         locator<NavigationService>().clearStackAndShow(routerRegisterDataView);
-        FocusManager.instance.primaryFocus.unfocus();
+        _focusManager.primaryFocus.unfocus();
         emailController.clear();
         passwordController.clear();
       }
@@ -58,7 +62,7 @@ class RegisterViewModel extends BaseViewModel {
   void registerDataEmailPassword() async {
     try {
       var userReg = UserModel(
-        id: FirebaseAuth.instance.currentUser.uid,
+        id: _firebaseAuth.currentUser.uid,
         photo: '',
         name: nameController.text,
         surname: surnameController.text,
@@ -69,7 +73,7 @@ class RegisterViewModel extends BaseViewModel {
       ).toFirebase();
       await UserService().createUser(userReg);
       locator<NavigationService>().clearStackAndShow(routerAppLoadingView);
-      FocusManager.instance.primaryFocus.unfocus();
+      _focusManager.primaryFocus.unfocus();
       nameController.clear();
       surnameController.clear();
       cityController.clear();
@@ -81,8 +85,25 @@ class RegisterViewModel extends BaseViewModel {
 
   void back() {
     locator<NavigationService>().back();
-    FocusManager.instance.primaryFocus.unfocus();
+    _focusManager.primaryFocus.unfocus();
     emailController.clear();
     passwordController.clear();
+  }
+
+  void deleteUser(String email) async {
+    if (deleteFormKey.currentState.validate()) {
+      try {
+        bool authRes = await _authService.signInEmailPassword(email, deletePasswordController.text);
+        if(authRes) {
+          await _authService.deleteUser(deletePasswordController.text);
+          await _authService.logOut();
+          locator<NavigationService>().clearStackAndShow(routerAppLoadingView);
+        } else {
+          showToast(textIncorrectPassword, redColor, whiteColor);
+        }
+      } catch(e) {
+        showToast(textIncorrectPassword, redColor, whiteColor);
+      }
+    }
   }
 }

@@ -1,55 +1,44 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
 import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
+import 'package:g_shop/ui/all_adverts_view/all_adverts_view.dart';
 import 'package:g_shop/ui/home_view/home_viewmodel.dart';
+import 'package:g_shop/ui/my_adverts_view/my_adverts_view.dart';
+import 'package:g_shop/ui/profile_view/profile_view.dart';
+import 'package:g_shop/ui/saved_advert_view/saved_adverts_view.dart';
 import 'package:g_shop/ui/utils/progress_screen.dart';
-import 'package:g_shop/ui/utils/scroll_custom.dart';
-import 'package:g_shop/ui/widgets/card_widget.dart';
-import 'package:g_shop/ui/widgets/exception_widget.dart';
+import 'package:g_shop/ui/widgets/other_widgets.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class HomeView extends StatelessWidget {
+  final int pageIndex;
+  HomeView({Key key, this.pageIndex}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilderConnect<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
+      onModelReady: (model) => model.getIndexPage(pageIndex),
       builder: (context, model, _) => model.isBusy? ProgressScreen() : ResponsiveBuilder(
         builder: (context, sizingInformation) => Scaffold(
-          appBar: AppBar(
-            title: Text(textHome, style: Theme.of(context).textTheme.headline2),
-            leading: null,
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.person),
-                onPressed: () => model.toMyProfile(),
-                tooltip: textYourProfile,
-              ),
-            ],
-          ),
-          body: model.adverts == null || model.adverts.isEmpty ?
-          ExceptionWidget(
-            title: textNoAdverts,
-            img: imgGuitarVector,
-            isError: false,
-          ) : ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Padding(
-                padding: sizingInformation.isTablet || sizingInformation.isDesktop ?
-                const EdgeInsets.symmetric(horizontal: 10.0) : const EdgeInsets.symmetric(horizontal: 3.0),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 90),
-                  child: Wrap(
-                    children: model.adverts.map((e) => CardWidget(e: e)).toList(),
-                  ),
+          body: PageTransitionSwitcher(
+            duration: const Duration(milliseconds: 500),
+            transitionBuilder: (
+                Widget child,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+                ) =>
+                FadeThroughTransition(
+                  animation: animation,
+                  fillColor: Theme.of(context).scaffoldBackgroundColor,
+                  secondaryAnimation: secondaryAnimation,
+                  child: child,
                 ),
-              ),
-            ),
+            child: getTab(model.currentIndex, model.currentUserUid),
           ),
-          floatingActionButton: FloatingActionButton(
+          floatingActionButton: model.currentIndex == 3 ? null : FloatingActionButton(
             heroTag: heroButtonCreateAdvert,
             backgroundColor: Theme.of(context).buttonColor,
             tooltip: textCreateAdvert,
@@ -62,8 +51,8 @@ class HomeView extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: blackGrayColor.withOpacity(0.2),
-                    spreadRadius: 3,
-                    blurRadius: 3,
+                    spreadRadius: 2,
+                    blurRadius: 2,
                   ),
                 ],
               ),
@@ -75,8 +64,50 @@ class HomeView extends StatelessWidget {
             ),
             onPressed: () => model.toAdvertCreate(),
           ),
+          bottomNavigationBar: BottomNavigationBar(
+            elevation: 0,
+            backgroundColor: Theme.of(context).appBarTheme.color,
+            currentIndex: model.currentIndex,
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: whiteColor,
+            unselectedItemColor: whiteColor,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            onTap: model.setIndex,
+            selectedLabelStyle: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13.0),
+            unselectedLabelStyle: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 12.0),
+            items: [
+              BottomNavigationBarItem(
+                icon: unselectedNavBarIcon(context, Icons.assignment_outlined),
+                activeIcon: selectedNavBarIcon(context, Icons.assignment),
+                label: textAllAdverts,
+              ),
+              BottomNavigationBarItem(
+                icon: unselectedNavBarIcon(context, Icons.bookmark_border),
+                activeIcon: selectedNavBarIcon(context, Icons.bookmark),
+                label: textSaved,
+              ),
+              BottomNavigationBarItem(
+                icon: unselectedNavBarIcon(context, Icons.assignment_ind_outlined),
+                activeIcon: selectedNavBarIcon(context, Icons.assignment_ind),
+                label: textMyAdverts,
+              ),
+              BottomNavigationBarItem(
+                icon: unselectedNavBarIcon(context, Icons.person_outline),
+                activeIcon: selectedNavBarIcon(context, Icons.person),
+                label: textProfile,
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Widget getTab(int index, String currentUserUid) {
+    if (index == 1) return SavedAdvertsView();
+    if (index == 2) return MyAdvertsView();
+    if (index == 3) return ProfileView(uid: currentUserUid);
+    return AllAdvertsView();
   }
 }

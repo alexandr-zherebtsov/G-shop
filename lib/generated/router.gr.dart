@@ -10,6 +10,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../core/models/advert_model.dart';
+import '../core/models/user_model.dart';
 import '../ui/advert_create_view/advert_create_view.dart';
 import '../ui/advert_editing_view/advert_editing_view.dart';
 import '../ui/advert_view/advert_view.dart';
@@ -75,8 +76,14 @@ class Router extends RouterBase {
       );
     },
     HomeView: (data) {
+      final args = data.getArgs<HomeViewArguments>(
+        orElse: () => HomeViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => HomeView(),
+        builder: (context) => HomeView(
+          key: args.key,
+          pageIndex: args.pageIndex,
+        ),
         settings: data,
       );
     },
@@ -129,9 +136,7 @@ class Router extends RouterBase {
       return MaterialPageRoute<dynamic>(
         builder: (context) => AdvertEditingView(
           key: args.key,
-          headline: args.headline,
-          price: args.price,
-          description: args.description,
+          advert: args.advert,
         ),
         settings: data,
       );
@@ -155,13 +160,7 @@ class Router extends RouterBase {
       return MaterialPageRoute<dynamic>(
         builder: (context) => ProfileEditingView(
           key: args.key,
-          name: args.name,
-          surname: args.surname,
-          role: args.role,
-          city: args.city,
-          email: args.email,
-          phoneNumber: args.phoneNumber,
-          aboutYourself: args.aboutYourself,
+          user: args.user,
         ),
         settings: data,
       );
@@ -173,6 +172,13 @@ class Router extends RouterBase {
 /// Arguments holder classes
 /// *************************************************************************
 
+/// HomeView arguments holder class
+class HomeViewArguments {
+  final Key key;
+  final int pageIndex;
+  HomeViewArguments({this.key, this.pageIndex});
+}
+
 /// AdvertView arguments holder class
 class AdvertViewArguments {
   final Key key;
@@ -183,11 +189,8 @@ class AdvertViewArguments {
 /// AdvertEditingView arguments holder class
 class AdvertEditingViewArguments {
   final Key key;
-  final String headline;
-  final int price;
-  final String description;
-  AdvertEditingViewArguments(
-      {this.key, this.headline, this.price, this.description});
+  final AdvertModel advert;
+  AdvertEditingViewArguments({this.key, this.advert});
 }
 
 /// ProfileView arguments holder class
@@ -200,20 +203,6 @@ class ProfileViewArguments {
 /// ProfileEditingView arguments holder class
 class ProfileEditingViewArguments {
   final Key key;
-  final String name;
-  final String surname;
-  final String role;
-  final String city;
-  final String email;
-  final String phoneNumber;
-  final String aboutYourself;
-  ProfileEditingViewArguments(
-      {this.key,
-      this.name,
-      this.surname,
-      this.role,
-      this.city,
-      this.email,
-      this.phoneNumber,
-      this.aboutYourself});
+  final UserModel user;
+  ProfileEditingViewArguments({this.key, this.user});
 }

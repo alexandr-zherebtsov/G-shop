@@ -84,23 +84,9 @@ class AdvertCreateView extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 20.0),
                             child: Wrap(
                               children: [
-                                SizedBox(
-                                  width: 58,
-                                  child: MaterialButton(
-                                    minWidth: 58,
-                                    height: 58,
-                                    padding: EdgeInsets.zero,
-                                    color: lightGreen,
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 50,
-                                        color: Theme.of(context).iconTheme.color,
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                  ),
-                                ),
+                                AddPhotoButton(() {
+                                  print('add photo');
+                                }),
                               ],
                             ),
                           ),
@@ -149,7 +135,7 @@ class AdvertCreateView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 30.0),
                             child: Center(
-                              child: CustomButtonWidget(
+                              child: CustomButton(
                                 textCreate,
                                 () {
                                   if (model.createAdvertDataFormKey.currentState.validate()) {

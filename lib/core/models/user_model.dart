@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String id;
   String photo;
@@ -7,6 +9,8 @@ class UserModel {
   String surname;
   String phoneNumber;
   String aboutYourself;
+  Timestamp createdAt;
+  Timestamp updatedAt;
   UserModel({
     this.id,
     this.photo,
@@ -16,6 +20,8 @@ class UserModel {
     this.email,
     this.phoneNumber,
     this.aboutYourself,
+    this.createdAt,
+    this.updatedAt,
   });
 
   Map<String, Object> toFirebase() {
@@ -28,6 +34,8 @@ class UserModel {
       'email': email == null ? '' : email,
       'phoneNumber': phoneNumber == null ? '' : phoneNumber,
       'aboutYourself': aboutYourself == null ? '' : aboutYourself,
+      'createdAt': createdAt == null ? Timestamp.now() : createdAt,
+      'updatedAt': updatedAt == null ? Timestamp.now() : updatedAt,
     };
   }
 }

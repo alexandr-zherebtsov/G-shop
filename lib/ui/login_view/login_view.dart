@@ -4,6 +4,7 @@ import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/reg_exp.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/ui/login_view/login_viewmodel.dart';
+import 'package:g_shop/ui/utils/other_utils.dart';
 import 'package:g_shop/ui/utils/scroll_custom.dart';
 import 'package:g_shop/ui/widgets/custom_button_widget.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -18,7 +19,8 @@ class LogInView extends StatelessWidget {
           leading: null,
           title: Text(textLogIn, style: Theme.of(context).textTheme.headline2),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
+              style: textButtonStyle(context, isWhite: true),
               child: Text(
                 textRegistration,
                 style: Theme.of(context).textTheme.headline3.copyWith(color: whiteColor),
@@ -89,7 +91,7 @@ class LogInView extends StatelessWidget {
                           ),
                           sizingInformation.isTablet || sizingInformation.isDesktop ?
                           SizedBox(height: 100) : Offstage(),
-                          CustomButtonWidget(
+                          CustomButton(
                             textLogIn,
                             () {
                               if (model.loginFormKey.currentState.validate()) {

@@ -1,7 +1,17 @@
+import 'package:flutter/material.dart';
+import 'package:g_shop/constants/colors.dart';
 import 'package:g_shop/generated/locator.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 enum DialogType {SomethingIsWrong}
+
+ButtonStyle textButtonStyle(BuildContext context, {bool isWhite = false}) {
+  return ButtonStyle(
+    overlayColor: MaterialStateColor.resolveWith(
+          (states) => isWhite ? whiteColor.withOpacity(0.1) : Theme.of(context).dividerColor.withOpacity(0.1),
+    ),
+  );
+}
 
 String formatMaskedPhone(String phoneNumber) {
   return phoneNumber.substring(0, 3) +
@@ -25,18 +35,20 @@ String dropFormatMaskedPhone(String phoneNumber) {
       .toString();
 }
 
-Future<void> gdun(int seconds) async {
-  await Future.delayed(Duration(seconds: seconds));
-}
-
-goBackNavigation({dynamic data}) {
+void goBackNavigation({dynamic data}) {
   locator<NavigationService>().back(result: data);
 }
 
-showSnackBar(String message, {isError = false, bool goBack = false}) async {
+UnderlineInputBorder searchInputDecoration(BuildContext context) {
+  return UnderlineInputBorder(
+    borderSide: BorderSide(color: Theme.of(context).textTheme.headline2.color),
+  );
+}
+
+void showSnackBar(String message, {isError = false, bool goBack = false}) async {
   awaitAndBack(int seconds) async {
     if (goBack) {
-      await gdun(3);
+      await Future.delayed(Duration(seconds: 3));
       goBackNavigation();
     }
   }

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class AdvertModel {
   final String id;
   final String uid;
@@ -5,7 +7,9 @@ class AdvertModel {
   final int price;
   final String description;
   final List<dynamic> images;
-  final String created;
+  final Timestamp createdAt;
+  final Timestamp updatedAt;
+  final List<dynamic> saved;
 
   AdvertModel({
     this.id,
@@ -14,6 +18,21 @@ class AdvertModel {
     this.price,
     this.description,
     this.images,
-    this.created,
+    this.createdAt,
+    this.updatedAt,
+    this.saved,
   });
+
+  Map<String, Object> toFirebase() {
+    return {
+      'id': id == null ? '' : id,
+      'uid': uid == null ? '' : uid,
+      'price': price == null ? 0 : price,
+      'description': description == null ? '' : description,
+      'images': images == null ? [] : images,
+      'createdAt': createdAt == null ? Timestamp.now() : createdAt,
+      'updatedAt': updatedAt == null ? Timestamp.now() : updatedAt,
+      'saved': saved == null ? [] : saved,
+    };
+  }
 }

@@ -3,6 +3,7 @@ import 'package:g_shop/constants/colors.dart';
 import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
+import 'package:g_shop/core/models/advert_model.dart';
 import 'package:g_shop/ui/advert_editing_view/advert_editing_viewmodel.dart';
 import 'package:g_shop/ui/utils/alert_widget.dart';
 import 'package:g_shop/ui/utils/scroll_custom.dart';
@@ -10,16 +11,8 @@ import 'package:g_shop/ui/widgets/custom_button_widget.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class AdvertEditingView extends StatelessWidget {
-
-  final String headline;
-  final int price;
-  final String description;
-  AdvertEditingView({
-    Key key,
-    this.headline,
-    this.price,
-    this.description,
-  });
+  final AdvertModel advert;
+  AdvertEditingView({Key key, this.advert});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +34,7 @@ class AdvertEditingView extends StatelessWidget {
                   context,
                   textDeleteAdvert + markQuestion,
                   textDescriptionDeleteAdvert,
-                   () => print(textDeleteAdvert),
+                  () => model.deleteAdvert(advert.id),
                 );
               },
               tooltip: textDeleteAdvert,
@@ -63,7 +56,7 @@ class AdvertEditingView extends StatelessWidget {
                         sizingInformation.isTablet || sizingInformation.isDesktop ?
                         SizedBox(height: 30) : Offstage(),
                         TextFormField(
-                          controller: model.headlineController..text = headline,
+                          controller: model.headlineController..text = advert.headline,
                           cursorColor: Theme.of(context).accentColor,
                           maxLength: 100,
                           decoration: const InputDecoration(
@@ -74,7 +67,7 @@ class AdvertEditingView extends StatelessWidget {
                           autofocus: false,
                         ),
                         TextFormField(
-                          controller: model.priceController..text = price.toString(),
+                          controller: model.priceController..text = advert.price.toString(),
                           cursorColor: Theme.of(context).accentColor,
                           maxLength: 7,
                           keyboardType: TextInputType.number,
@@ -98,24 +91,16 @@ class AdvertEditingView extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: Wrap(
                             children: [
-                              SizedBox(
-                                width: 58,
-                                child: MaterialButton(
-                                  minWidth: 58,
-                                  height: 58,
-                                  padding: EdgeInsets.zero,
-                                  color: lightGreen,
-                                  child: Center(child: Icon(Icons.add, size: 50, color: whiteColor)),
-                                  onPressed: () {},
-                                ),
-                              ),
+                              AddPhotoButton(() {
+                                print('add photo');
+                              }),
                             ],
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: TextFormField(
-                            controller: model.descriptionController..text = description,
+                            controller: model.descriptionController..text = advert.description,
                             cursorColor: Theme.of(context).accentColor,
                             maxLength: 1000,
                             keyboardType: TextInputType.number,
@@ -151,7 +136,7 @@ class AdvertEditingView extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 30.0),
                           child: Center(
-                            child: CustomButtonWidget(textDone, () => print(textDone)),
+                            child: CustomButton(textDone, () => model.editAdvert(advert)),
                           ),
                         )
                       ],

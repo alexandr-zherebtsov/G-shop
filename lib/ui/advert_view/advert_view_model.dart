@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:g_shop/constants/strings.dart';
+import 'package:g_shop/core/models/advert_model.dart';
 import 'package:g_shop/generated/locator.dart';
 import 'package:g_shop/generated/router.gr.dart';
 import 'package:stacked/stacked.dart';
@@ -20,14 +21,10 @@ class AdvertViewModel extends BaseViewModel {
     locator<NavigationService>().navigateTo(routerProfileView, arguments: ProfileViewArguments(uid: uid));
   }
 
-  void advertEditing(String headline, int price, String description) {
+  void advertEditing(AdvertModel advert) {
     locator<NavigationService>().navigateTo(
       routerAdvertEditingView,
-      arguments: AdvertEditingViewArguments(
-        headline: headline,
-        price: price,
-        description: description,
-      ),
+      arguments: AdvertEditingViewArguments(advert: advert),
     );
   }
 }
