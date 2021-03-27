@@ -1,3 +1,4 @@
+const String textGShop = 'G-shop';
 const String textBack = 'Back';
 const String textCreateAdvert = 'Create Advert';
 const String textHeadline = 'Headline';
@@ -36,6 +37,7 @@ const String textSurname = 'Surname';
 const String textCity = 'City';
 const String textPhoneNumber = 'Phone Number';
 const String textAboutYourself = 'About Yourself';
+const String textAboutPerson = 'About Person';
 const String textSave = 'Save';
 const String textProfile = 'Profile';
 const String textEditProfile = 'Edit Profile';

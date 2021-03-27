@@ -12,8 +12,12 @@ class AdvertEditingViewModel extends BaseViewModel {
   final TextEditingController headlineController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final AdvertService _advertService = AdvertService();
 
   Future<void> editAdvert(AdvertModel advert) async {
+    setBusy(true);
+    print('lol');
+    print(headlineController.text);
     Map<String, Object> advertEdited = AdvertModel(
       id: advert.id,
       uid: advert.uid,
@@ -25,15 +29,17 @@ class AdvertEditingViewModel extends BaseViewModel {
       updatedAt: Timestamp.now(),
       saved: advert.saved,
     ).toFirebase();
-    await AdvertService().editAdvert(advert.id, advertEdited);
+    await _advertService.editAdvert(advert.id, advertEdited);
     toHome();
+    setBusy(false);
   }
 
   Future<void> deleteAdvert(String id) async {
-    await AdvertService().deleteAdvert(id);
+    setBusy(true);
+    await _advertService.deleteAdvert(id);
     toHome();
+    setBusy(false);
   }
-
 
   void toHome() {
     locator<NavigationService>().clearStackAndShow(

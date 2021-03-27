@@ -1,12 +1,19 @@
+import 'package:g_shop/constants/colors.dart';
+import 'package:g_shop/constants/localization.dart';
+import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/models/advert_model.dart';
 import 'package:g_shop/core/services/advert_service.dart';
+import 'package:g_shop/generated/locator.dart';
+import 'package:g_shop/generated/router.gr.dart';
+import 'package:g_shop/ui/utils/toast_widget.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class CardViewModel extends BaseViewModel {
-  Future<void> setSave(AdvertModel e, String uid, bool isSaved) async {
+  Future<bool> setSave(AdvertModel e, String uid, bool isSaved) async {
     if (e.saved.length > 0) {
-      for(int i = 0; i < e.saved.length; i++) {
-        if(e.saved[i] == uid) {
+      for (int i = 0; i < e.saved.length; i++) {
+        if (e.saved[i] == uid) {
           isSaved = true;
         }
       }
@@ -15,10 +22,18 @@ class CardViewModel extends BaseViewModel {
     }
     if (isSaved) {
       e.saved..remove(uid);
+      isSaved = false;
+      showToast(textRemovedFromSaved, lightGreen.withOpacity(0.75), whiteColor);
     } else {
       e.saved..add(uid);
+      isSaved = true;
+      showToast(textAddedToSaved, lightGreen.withOpacity(0.75), whiteColor);
     }
     await AdvertService().toSavedAdvert(e.id, e.toFirebase());
-    notifyListeners();
+    return isSaved;
+  }
+
+  void toAdvertView(AdvertModel e) {
+    locator<NavigationService>().navigateTo(routerAdvertView, arguments: AdvertViewArguments(e: e));
   }
 }

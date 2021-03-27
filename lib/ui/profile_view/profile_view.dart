@@ -29,6 +29,7 @@ class ProfileView extends StatelessWidget {
             leading: model.currentUserUid == uid ? null : IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () => model.goBack(),
+              tooltip: textBack,
             ),
             title: Text(
               model.currentUserUid == uid ? textYourProfile : textProfile,
@@ -189,7 +190,7 @@ class ProfileView extends StatelessWidget {
                     ),
                     model.user.email.isEmpty ? Offstage() : ProfileTextWidget(textEmail + markColon, model.user.email),
                     model.user.phoneNumber.isEmpty ? Offstage() : ProfileTextWidget(textPhoneNumber + markColon, formatMaskedPhone(model.user.phoneNumber)),
-                    model.user.aboutYourself.isEmpty ? Offstage() : ProfileTextWidget(textAboutYourself + markColon, model.user.aboutYourself),
+                    model.user.aboutYourself.isEmpty ? Offstage() : ProfileTextWidget(model.currentUserUid == uid ? textAboutYourself : textAboutPerson + markColon, model.user.aboutYourself),
                     model.currentUserUid == uid ? InkWell(
                       focusColor: transparentColor,
                       hoverColor: transparentColor,

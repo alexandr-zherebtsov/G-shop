@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:g_shop/constants/colors.dart';
 import 'package:g_shop/constants/localization.dart';
+import 'package:g_shop/constants/reg_exp.dart';
 import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/core/models/advert_model.dart';
@@ -62,12 +64,16 @@ class AdvertEditingView extends StatelessWidget {
                           decoration: const InputDecoration(
                             labelText: textHeadline,
                           ),
+                          onChanged: (v) {
+                            print(model.headlineController.text);
+                          },
                           keyboardType: TextInputType.text,
                           autocorrect: false,
                           autofocus: false,
                         ),
                         TextFormField(
                           controller: model.priceController..text = advert.price.toString(),
+                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(numberReg))],
                           cursorColor: Theme.of(context).accentColor,
                           maxLength: 7,
                           keyboardType: TextInputType.number,

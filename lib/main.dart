@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/themes.dart';
 import 'package:g_shop/core/services/dependency_injection.dart';
 import 'package:g_shop/generated/locator.dart';
@@ -27,7 +28,7 @@ class App extends StatelessWidget {
     return ThemeBuilder(
       themes: getThemes(),
       builder: (context, darkTheme, lightTheme, themeMode) => MaterialApp(
-        title: 'G-shop',
+        title: textGShop,
         debugShowCheckedModeBanner: false,
         onGenerateRoute: auto_router.Router().onGenerateRoute,
         navigatorKey: locator<NavigationService>().navigatorKey,

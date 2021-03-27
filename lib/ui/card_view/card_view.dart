@@ -1,18 +1,13 @@
 import 'package:decorated_icon/decorated_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
-import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/core/models/advert_model.dart';
-import 'package:g_shop/generated/locator.dart';
-import 'package:g_shop/generated/router.gr.dart';
 import 'package:g_shop/ui/card_view/card_viewmodel.dart';
-import 'package:g_shop/ui/utils/toast_widget.dart';
 import 'package:g_shop/ui/widgets/headline_widget.dart';
 import 'package:g_shop/ui/widgets/price_widget.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class CardView extends StatelessWidget {
   final AdvertModel e;
@@ -58,7 +53,7 @@ class CardView extends StatelessWidget {
           child: Card(
             margin: const EdgeInsets.all(3.0),
             child: InkWell(
-              onTap: () => locator<NavigationService>().navigateTo(routerAdvertView, arguments: AdvertViewArguments(e: e)),
+              onTap: () => model.toAdvertView(e),
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Row(
@@ -114,18 +109,8 @@ class CardView extends StatelessWidget {
                               ),
                             ),
                             onTap: () async {
-                              await model.setSave(e, uid, isSaved);
-                              if (e.saved.length > 0) {
-                                for(int i = 0; i < e.saved.length; i++) {
-                                  if(e.saved[i] == uid) {
-                                    isSaved = true;
-                                    showToast(textAddedToSaved, lightGreen.withOpacity(0.75), whiteColor);
-                                  }
-                                }
-                              } else {
-                                isSaved = false;
-                                showToast(textRemovedFromSaved, lightGreen.withOpacity(0.75), whiteColor);
-                              }
+                              isSaved = await model.setSave(e, uid, isSaved);
+                              model.notifyListeners();
                             },
                           ),
                         ],

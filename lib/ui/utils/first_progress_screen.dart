@@ -20,7 +20,7 @@ class _FirstProgressScreenState extends State<FirstProgressScreen> with SingleTi
   void initState() {
     super.initState();
     animationController = AnimationController(
-      duration: Duration(milliseconds: 2500),
+      duration: Duration(milliseconds: 1300),
       vsync: this,
     );
     animation = Tween(begin: 0.0, end: 1.0).animate(
@@ -46,7 +46,7 @@ class _FirstProgressScreenState extends State<FirstProgressScreen> with SingleTi
         color: model.bgColor,
         padding: const EdgeInsets.only(top: 16.0),
         child: FadeTransition(
-          opacity: animationController.drive(CurveTween(curve: Curves.easeOut)),
+          opacity: animationController.drive(CurveTween(curve: Curves.fastOutSlowIn)),
           child: Center(
             child: Stack(
               clipBehavior: Clip.none,

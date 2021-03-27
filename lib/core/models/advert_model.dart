@@ -27,6 +27,7 @@ class AdvertModel {
     return {
       'id': id == null ? '' : id,
       'uid': uid == null ? '' : uid,
+      'headline': headline == null ? '' : headline,
       'price': price == null ? 0 : price,
       'description': description == null ? '' : description,
       'images': images == null ? [] : images,

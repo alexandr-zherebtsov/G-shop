@@ -18,7 +18,7 @@ class AdvertService {
           id: e.id,
           uid: e['uid'] ?? '',
           headline: e['headline'] ?? '',
-          price: e['prise'] ?? '',
+          price: e['price'] ?? '',
           description: e['description'] ?? '',
           images: e['images'] ?? [],
           createdAt: e['createdAt'],
@@ -37,7 +37,7 @@ class AdvertService {
       'id': createAdvert.id,
       'uid': createAdvert.uid,
       'headline': createAdvert.headline,
-      'prise': createAdvert.price,
+      'price': createAdvert.price,
       'description': createAdvert.description,
       'images': createAdvert.images,
       'createdAt': createAdvert.createdAt,
@@ -56,7 +56,7 @@ class AdvertService {
         id: e.id,
         uid: e['uid'] ?? '',
         headline: e['headline'] ?? '',
-        price: e['prise'] ?? '',
+        price: e['price'] ?? '',
         description: e['description'] ?? '',
         images: e['images'] ?? [],
         createdAt: e['createdAt'],
@@ -75,7 +75,7 @@ class AdvertService {
         id: e.id,
         uid: e['uid'] ?? '',
         headline: e['headline'] ?? '',
-        price: e['prise'] ?? '',
+        price: e['price'] ?? '',
         description: e['description'] ?? '',
         images: e['images'] ?? [],
         createdAt: e['createdAt'],
@@ -87,6 +87,7 @@ class AdvertService {
   }
 
   Future<void> editAdvert(String id, Map<String, dynamic> advert) async {
+    print(advert);
     try {
       await _db.collection(_advertsName).doc(id).update(advert);
     } catch (e) {

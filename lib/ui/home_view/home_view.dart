@@ -65,7 +65,7 @@ class HomeView extends StatelessWidget {
             onPressed: () => model.toAdvertCreate(),
           ),
           bottomNavigationBar: BottomNavigationBar(
-            elevation: 0,
+            elevation: 12.0,
             backgroundColor: Theme.of(context).appBarTheme.color,
             currentIndex: model.currentIndex,
             type: BottomNavigationBarType.fixed,
