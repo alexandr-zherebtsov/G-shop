@@ -16,7 +16,7 @@ class AppLoadingView extends StatelessWidget {
         builder: (c, s) => s.connectionState == ConnectionState.done
             ? FirstProgressScreen(brightness: brightness)
             : Container(
-          color: brightness == Brightness.dark ? mediumGray : whiteColor,
+          color: brightness == Brightness.dark ? colorMediumGray : colorWhite,
         ),
       ),
     );

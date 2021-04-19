@@ -23,11 +23,11 @@ class CardViewModel extends BaseViewModel {
     if (isSaved) {
       e.saved..remove(uid);
       isSaved = false;
-      showToast(textRemovedFromSaved, lightGreen.withOpacity(0.75), whiteColor);
+      showToast(textRemovedFromSaved, colorLightGreen.withOpacity(0.75), colorWhite);
     } else {
       e.saved..add(uid);
       isSaved = true;
-      showToast(textAddedToSaved, lightGreen.withOpacity(0.75), whiteColor);
+      showToast(textAddedToSaved, colorLightGreen.withOpacity(0.75), colorWhite);
     }
     await AdvertService().toSavedAdvert(e.id, e.toFirebase());
     return isSaved;

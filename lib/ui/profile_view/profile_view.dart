@@ -4,7 +4,9 @@ import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/strings.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/ui/profile_view/profile_viewmodel.dart';
+import 'package:g_shop/ui/utils/alert_widget.dart';
 import 'package:g_shop/ui/utils/other_utils.dart';
+import 'package:g_shop/ui/utils/profile_image.dart';
 import 'package:g_shop/ui/utils/progress_screen.dart';
 import 'package:g_shop/ui/utils/scroll_custom.dart';
 import 'package:g_shop/ui/widgets/custom_button_widget.dart';
@@ -22,13 +24,13 @@ class ProfileView extends StatelessWidget {
     return ViewModelBuilderConnect<ProfileViewModel>.reactive(
       viewModelBuilder: () => ProfileViewModel(),
       onModelReady: (vm) => vm.initUser(uid),
-      builder: (context, model, _) => model.isBusy? ProgressScreen() : model.isBusy ? ProgressScreen() : ResponsiveBuilder(
+      builder: (context, model, _) => model.isBusy ? ProgressScreen() : ResponsiveBuilder(
         builder: (context, sizingInformation) => Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
             leading: model.currentUserUid == uid ? null : IconButton(
               icon: Icon(Icons.arrow_back),
-              onPressed: () => model.goBack(),
+              onPressed: () => goBackNav(),
               tooltip: textBack,
             ),
             title: Text(
@@ -56,48 +58,17 @@ class ProfileView extends StatelessWidget {
                     Row(
                       children: [
                         model.currentUserUid == uid ? InkWell(
-                          focusColor: transparentColor,
-                          hoverColor: transparentColor,
-                          splashColor: transparentColor,
-                          highlightColor: transparentColor,
-                          onTap: () => print(textChangeAvatar),
+                          focusColor: colorTransparent,
+                          hoverColor: colorTransparent,
+                          splashColor: colorTransparent,
+                          highlightColor: colorTransparent,
+                          onTap: () => model.buildBottomSheet(context, model.user),
                           child: SizedBox(
                             height: sizingInformation.isTablet || sizingInformation.isDesktop ? 300 : 128,
                             width: sizingInformation.isTablet || sizingInformation.isDesktop ? 300 : 128,
                             child: Stack(
                               children: [
-                                ClipOval(
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).brightness == Brightness.light ? blackColor.withOpacity(0.12) : whiteColor.withOpacity(0.2),
-                                    ),
-                                    child: model.user.photo.isEmpty ? Icon(
-                                      Icons.person,
-                                      size: sizingInformation.isTablet || sizingInformation.isDesktop ? 210 : 90,
-                                    ) : Image.network(
-                                      model.user.photo,
-                                      key: UniqueKey(),
-                                      loadingBuilder: (BuildContext context, Widget child,
-                                          ImageChunkEvent loadingProgress) {
-                                        if (loadingProgress == null) return child;
-                                        return Center(
-                                          child: CircularProgressIndicator(
-                                            value: loadingProgress.expectedTotalBytes != null
-                                                ? loadingProgress.cumulativeBytesLoaded /
-                                                loadingProgress.expectedTotalBytes : null,
-                                          ),
-                                        );
-                                      },
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (context, _, error) => Icon(
-                                        Icons.error_outline,
-                                        size: sizingInformation.isTablet || sizingInformation.isDesktop ? 210 : 90,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                buildProfileImage(context, sizingInformation, model.user.photo),
                                 Positioned(
                                   child: Align(
                                     alignment: Alignment.bottomRight,
@@ -112,7 +83,7 @@ class ProfileView extends StatelessWidget {
                                         ),
                                       ),
                                       decoration: const BoxDecoration(
-                                        color: lightGreen,
+                                        color: colorLightGreen,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
@@ -122,40 +93,9 @@ class ProfileView extends StatelessWidget {
                             ),
                           ),
                         ) : SizedBox(
-                          height: sizingInformation.isTablet || sizingInformation.isDesktop ? 300 : 128,
-                          width: sizingInformation.isTablet || sizingInformation.isDesktop ? 300 : 128,
-                          child: ClipOval(
-                            child: Container(
-                              width: double.infinity,
-                              height: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).brightness == Brightness.light ? blackColor.withOpacity(0.12) : whiteColor.withOpacity(0.2),
-                              ),
-                              child: model.user.photo.isEmpty ? Icon(
-                                Icons.person,
-                                size: sizingInformation.isTablet || sizingInformation.isDesktop ? 210 : 90,
-                              ) : Image.network(
-                                model.user.photo,
-                                key: UniqueKey(),
-                                loadingBuilder: (BuildContext context, Widget child,
-                                    ImageChunkEvent loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      value: loadingProgress.expectedTotalBytes != null
-                                          ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes : null,
-                                    ),
-                                  );
-                                },
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, _, error) => Icon(
-                                  Icons.error_outline,
-                                  size: sizingInformation.isTablet || sizingInformation.isDesktop ? 210 : 90,
-                                ),
-                              ),
-                            ),
-                          ),
+                            height: sizingInformation.isTablet || sizingInformation.isDesktop ? 300 : 128,
+                            width: sizingInformation.isTablet || sizingInformation.isDesktop ? 300 : 128,
+                            child: buildProfileImage(context, sizingInformation, model.user.photo),
                         ),
                         SizedBox(width: 15),
                         SizedBox(
@@ -192,10 +132,10 @@ class ProfileView extends StatelessWidget {
                     model.user.phoneNumber.isEmpty ? Offstage() : ProfileTextWidget(textPhoneNumber + markColon, formatMaskedPhone(model.user.phoneNumber)),
                     model.user.aboutYourself.isEmpty ? Offstage() : ProfileTextWidget(model.currentUserUid == uid ? textAboutYourself : textAboutPerson + markColon, model.user.aboutYourself),
                     model.currentUserUid == uid ? InkWell(
-                      focusColor: transparentColor,
-                      hoverColor: transparentColor,
-                      splashColor: transparentColor,
-                      highlightColor: transparentColor,
+                      focusColor: colorTransparent,
+                      hoverColor: colorTransparent,
+                      splashColor: colorTransparent,
+                      highlightColor: colorTransparent,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -205,8 +145,8 @@ class ProfileView extends StatelessWidget {
                             height: 40,
                             margin: const EdgeInsets.only(right: 12),
                             decoration: BoxDecoration(
-                              color: Theme.of(context).brightness == Brightness.light ? lightGreen :
-                              whiteColor.withOpacity(0.2),
+                              color: Theme.of(context).brightness == Brightness.light ? colorLightGreen :
+                              colorWhite.withOpacity(0.2),
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
@@ -221,11 +161,20 @@ class ProfileView extends StatelessWidget {
                       ),
                       onTap: () => getThemeManager(context).selectThemeAtIndex(Theme.of(context).brightness == Brightness.light ? 0 : 1),
                     ) : Offstage(),
-                    SizedBox(height: 50),
-                    Center(
-                      child: CustomButton(
-                        model.currentUserUid == uid ? textLogOut : textCall,
-                        model.currentUserUid == uid ? () => model.logOut() : () => model.numFun(model.user.phoneNumber),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50.0, bottom: 26.0),
+                      child: Center(
+                        child: CustomButton(
+                          model.currentUserUid == uid ? textLogOut : textCall,
+                          model.currentUserUid == uid ? () =>
+                          showAlert(
+                            context,
+                            textLogOut + markQuestion,
+                            textLogOutMessage + markQuestion,
+                            () => model.logOut(),
+                            isLogOut: true,
+                          ) : () => model.numFun(model.user.phoneNumber),
+                        ),
                       ),
                     ),
                   ],

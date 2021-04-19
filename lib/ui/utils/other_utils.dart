@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
 import 'package:g_shop/generated/locator.dart';
@@ -8,9 +9,19 @@ enum DialogType {SomethingIsWrong}
 ButtonStyle textButtonStyle(BuildContext context, {bool isWhite = false}) {
   return ButtonStyle(
     overlayColor: MaterialStateColor.resolveWith(
-          (states) => isWhite ? whiteColor.withOpacity(0.1) : Theme.of(context).dividerColor.withOpacity(0.1),
+          (states) => isWhite ? colorWhite.withOpacity(0.1) : Theme.of(context).dividerColor.withOpacity(0.1),
     ),
   );
+}
+
+void goBackNav() {
+  locator<NavigationService>().back();
+}
+
+String generateId(String tag) {
+  return tag + (1000 + Random().nextInt(100)).toString() + DateTime.now().toString().replaceAll(' ', '').replaceAll('+', '')
+      .replaceAll('-', '').replaceAll(':', '').replaceAll(',', '').replaceAll('.', '')
+      + (1000000000 + Random().nextInt(10000000)).toString();
 }
 
 String formatMaskedPhone(String phoneNumber) {
@@ -35,10 +46,6 @@ String dropFormatMaskedPhone(String phoneNumber) {
       .toString();
 }
 
-void goBackNavigation({dynamic data}) {
-  locator<NavigationService>().back(result: data);
-}
-
 UnderlineInputBorder searchInputDecoration(BuildContext context) {
   return UnderlineInputBorder(
     borderSide: BorderSide(color: Theme.of(context).textTheme.headline2.color),
@@ -49,7 +56,7 @@ void showSnackBar(String message, {isError = false, bool goBack = false}) async 
   awaitAndBack(int seconds) async {
     if (goBack) {
       await Future.delayed(Duration(seconds: 3));
-      goBackNavigation();
+      goBackNav();
     }
   }
 

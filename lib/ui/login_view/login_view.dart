@@ -23,7 +23,7 @@ class LogInView extends StatelessWidget {
               style: textButtonStyle(context, isWhite: true),
               child: Text(
                 textRegistration,
-                style: Theme.of(context).textTheme.headline3.copyWith(color: whiteColor),
+                style: Theme.of(context).textTheme.headline3.copyWith(color: colorWhite),
               ),
               onPressed: () => model.goToRegister(),
             ),

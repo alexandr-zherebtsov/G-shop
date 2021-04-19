@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
 import 'package:g_shop/constants/localization.dart';
-import 'package:g_shop/generated/locator.dart';
 import 'package:g_shop/ui/utils/other_utils.dart';
-import 'package:stacked_services/stacked_services.dart';
 
-void showAlert(BuildContext context, String headline, String title, Function function) {
+void showAlert(BuildContext context, String headline, String title, Function function, {isLogOut = false}) {
   assert(context != null);
   assert(headline != null);
   assert(title != null);
@@ -19,11 +17,11 @@ void showAlert(BuildContext context, String headline, String title, Function fun
         TextButton(
           style: textButtonStyle(context),
           child: Text(textCancel, style: Theme.of(context).textTheme.bodyText1),
-          onPressed: () => locator<NavigationService>().back(),
+          onPressed: () => goBackNav(),
         ),
         TextButton(
           style: textButtonStyle(context),
-          child: Text(textDelete, style: Theme.of(context).textTheme.bodyText1.copyWith(color: redColor)),
+          child: Text(isLogOut ? textYes : textDelete, style: Theme.of(context).textTheme.bodyText1.copyWith(color: colorRed)),
           onPressed: function,
         ),
       ],
@@ -78,12 +76,12 @@ void showPasswordAlert(
             child: Text(textCancel, style: Theme.of(context).textTheme.bodyText1),
             onPressed: () {
               passwordController.clear();
-              locator<NavigationService>().back();
+              goBackNav();
             },
           ),
           TextButton(
             style: textButtonStyle(context),
-            child: Text(textDelete, style: Theme.of(context).textTheme.bodyText1.copyWith(color: redColor)),
+            child: Text(textDelete, style: Theme.of(context).textTheme.bodyText1.copyWith(color: colorRed)),
             onPressed: function,
           ),
         ],

@@ -30,9 +30,10 @@ class AddPhotoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: 58,
       height: 58,
+      margin: const EdgeInsets.all(4.0),
       child: MaterialButton(
         minWidth: 58,
         height: 58,

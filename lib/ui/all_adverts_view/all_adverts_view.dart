@@ -24,7 +24,7 @@ class AllAdvertsView extends StatelessWidget {
               autofocus: true,
               controller: model.searchTextController,
               cursorColor: Theme.of(context).textTheme.headline2.color,
-              style: Theme.of(context).textTheme.bodyText1.copyWith(color: whiteColor),
+              style: Theme.of(context).textTheme.bodyText1.copyWith(color: colorWhite),
               onChanged: (v) => model.onChangedSearch(),
               decoration: InputDecoration(
                 border: searchInputDecoration(context),

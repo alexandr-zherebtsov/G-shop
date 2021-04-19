@@ -5,7 +5,10 @@ import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/reg_exp.dart';
 import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/ui/advert_create_view/advert_create_viewmodel.dart';
+import 'package:g_shop/ui/utils/other_utils.dart';
+import 'package:g_shop/ui/utils/progress_screen.dart';
 import 'package:g_shop/ui/utils/scroll_custom.dart';
+import 'package:g_shop/ui/widgets/add_images_widget.dart';
 import 'package:g_shop/ui/widgets/custom_button_widget.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
@@ -14,12 +17,12 @@ class AdvertCreateView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilderConnect<AdvertCreateViewModel>.reactive(
       viewModelBuilder: () => AdvertCreateViewModel(),
-      builder: (context, model, _) => Scaffold(
+      builder: (context, model, _) => model.isBusy ? ProgressScreen() : Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             tooltip: textBack,
-            onPressed: () => model.back(),
+            onPressed: () => goBackNav(),
           ),
           title: Text(textCreateAdvert, style: Theme.of(context).textTheme.headline2),
         ),
@@ -74,21 +77,24 @@ class AdvertCreateView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 20.0),
                             child: Text(
-                              textAddPhotos,
+                              textAddPhotos + ' ${model.images.length}/5',
                               style: Theme.of(context).textTheme.headline3.copyWith(
-                                color: Theme.of(context).brightness == Brightness.light ? grayColor_1 : grayColor_2,
+                                color: Theme.of(context).brightness == Brightness.light ? colorGray_1 : colorGray_2,
                               ),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20.0),
                             child: Wrap(
-                              children: [
-                                AddPhotoButton(() {
-                                  print('add photo');
-                                }),
-                              ],
+                              children:
+                                model.images.map((e) => getImageWidget(() => model.deleteChosenImg(e), true, e: e)).toList()..add(
+                                  model.images.length < 5 ? AddPhotoButton(() => model.loadImages()) : Container(),
+                                ),
                             ),
+                          ),
+                          model.isImg ? Offstage() : Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: Text(uploadImgError, style: const TextStyle(color: colorRed)),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -104,21 +110,21 @@ class AdvertCreateView extends StatelessWidget {
                               decoration: InputDecoration(
                                 labelText: textDescription,
                                 errorText: null,
-                                errorStyle: const TextStyle(color: redColor),
+                                errorStyle: const TextStyle(color: colorRed),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: grayColor_2),
+                                  borderSide: BorderSide(color: colorGray_2),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: lightGreen),
+                                  borderSide: BorderSide(color: colorLightGreen),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: redColor),
+                                  borderSide: BorderSide(color: colorRed),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: lightGreen),
+                                  borderSide: BorderSide(color: colorLightGreen),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                               ),
@@ -139,8 +145,19 @@ class AdvertCreateView extends StatelessWidget {
                                 textCreate,
                                 () {
                                   if (model.createAdvertDataFormKey.currentState.validate()) {
+                                    model.isValidate = true;
+                                  } else {
+                                    model.isValidate = false;
+                                  }
+                                  if (model.images.length > 0) {
+                                    model.isImg = true;
+                                  } else {
+                                    model.isImg = false;
+                                  }
+                                  if (model.isValidate && model.isImg) {
                                     model.createAdvertData();
                                   }
+                                  model.notifyListeners();
                                 },
                               ),
                             ),

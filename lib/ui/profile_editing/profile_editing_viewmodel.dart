@@ -58,10 +58,10 @@ class ProfileEditingViewModel extends BaseViewModel {
           await _authService.logOut();
           locator<NavigationService>().clearStackAndShow(routerAppLoadingView);
         } else {
-          showToast(textIncorrectPassword, redColor, whiteColor);
+          showToast(textIncorrectPassword, colorRed, colorWhite);
         }
       } catch(e) {
-        showToast(textIncorrectPassword, redColor, whiteColor);
+        showToast(textIncorrectPassword, colorRed, colorWhite);
       }
     }
   }

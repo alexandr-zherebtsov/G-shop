@@ -43,7 +43,7 @@ class CardView extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
             boxShadow: [
               BoxShadow(
-                color: blackColor.withOpacity(0.01),
+                color: colorBlack.withOpacity(0.01),
                 spreadRadius: 0.0,
                 blurRadius: 0.0,
                 offset: Offset.zero,
@@ -67,19 +67,17 @@ class CardView extends StatelessWidget {
                             child: Container(
                               height: 140,
                               width: 140,
-                              color: blackColor.withOpacity(0.1),
-                              child: Image.network(
-                                testingImage,
+                              color: colorBlack.withOpacity(0.1),
+                              child: e.images == null || e.images.isEmpty ? Image.asset(
+                                imgGuitarVector,
+                                fit: BoxFit.fitHeight,
+                                color: Theme.of(context).textTheme.headline1.color.withOpacity(0.6),
+                              ) : Image.network(
+                                e.images[0],
                                 key: UniqueKey(),
                                 loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
                                   if (loadingProgress == null) return child;
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      value: loadingProgress.expectedTotalBytes != null
-                                          ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes : null,
-                                    ),
-                                  );
+                                  return Center(child: CircularProgressIndicator());
                                 },
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, _, error) => Icon(
@@ -90,10 +88,10 @@ class CardView extends StatelessWidget {
                             ),
                           ),
                           uid == e.uid ? Offstage() : InkWell(
-                            highlightColor: transparentColor,
-                            splashColor: transparentColor,
-                            focusColor: transparentColor,
-                            hoverColor: transparentColor,
+                            highlightColor: colorTransparent,
+                            splashColor: colorTransparent,
+                            focusColor: colorTransparent,
+                            hoverColor: colorTransparent,
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: DecoratedIcon(
@@ -102,7 +100,7 @@ class CardView extends StatelessWidget {
                                 shadows: [
                                   BoxShadow(
                                     blurRadius: 12.0,
-                                    color: blackColor.withOpacity(0.3),
+                                    color: colorBlack.withOpacity(0.3),
                                     offset: Offset(0, 2.0),
                                   ),
                                 ],

@@ -9,39 +9,50 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #ui
-  animations: ^1.1.2
-  cupertino_icons: ^1.0.0
-  stacked_themes: ^0.2.2+1
-  fluttertoast: ^7.1.6
-  decorated_icon: ^1.0.3
-  responsive_builder: ^0.3.0
-  mask_text_input_formatter: ^1.2.1
-  #core
-  stacked: ^1.7.6
-  stacked_services: ^0.5.4+4
-  get_it: ^5.0.1
-  auto_route: ^0.6.9
-  url_launcher: ^5.7.10
-  connectivity: ^2.0.1
+
+  # Core
   dio: ^3.0.10
-  # firebase
+  get_it: ^5.0.1
+  stacked: ^1.7.6
+  auto_route: ^0.6.9
+  stacked_services: ^0.5.4+4
+
+  # Firebase
   firebase_core: ^0.7.0
   firebase_auth: ^0.20.0+1
   cloud_firestore: ^0.16.0
   firebase_storage: ^7.0.0
 
+  # Utils
+  url_launcher: 6.0.2
+  connectivity: ^3.0.2
+  fluttertoast: ^7.1.6
+  image_picker: ^0.6.7+22
+  responsive_builder: ^0.3.0
+  multi_image_picker: ^4.7.15
+  cached_network_image: ^2.5.1
+  flutter_absolute_path: ^1.0.6
+  mask_text_input_formatter: ^1.2.1
+
+  # UI
+  animations: ^1.1.2
+  carousel_pro: ^1.0.0
+  decorated_icon: ^1.0.3
+  cupertino_icons: ^1.0.2
+  stacked_themes: ^0.2.2+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.8.0
+
   build_runner: ^1.10.3
-  auto_route_generator: ^0.6.10
   injectable_generator: ^1.0.4
+  auto_route_generator: ^0.6.10
+  flutter_launcher_icons: ^0.8.0
 
 flutter_icons:
-  android: 'launcher_icon'
   ios: true
+  android: 'launcher_icon'
   image_path: 'assets/icons/app_icon.png'
 
 flutter:

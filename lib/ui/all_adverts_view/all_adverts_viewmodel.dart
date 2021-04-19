@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/strings.dart';
-import 'package:g_shop/core/exeptions/exception_handler.dart';
+import 'package:g_shop/core/exceptions/exception_handler.dart';
 import 'package:g_shop/core/models/advert_model.dart';
 import 'package:g_shop/core/services/advert_service.dart';
 import 'package:g_shop/generated/locator.dart';

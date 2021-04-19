@@ -15,13 +15,13 @@ class PriceWidget extends StatelessWidget {
         maxWidth: 100,
       ),
       decoration: BoxDecoration(
-        color: lightGreen,
+        color: colorLightGreen,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Center(
         child: Text(
           '$title $markDollar',
-          style: Theme.of(context).textTheme.headline3.copyWith(color: whiteColor),
+          style: Theme.of(context).textTheme.headline3.copyWith(color: colorWhite),
         ),
       ),
     );

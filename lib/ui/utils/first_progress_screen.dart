@@ -64,7 +64,7 @@ class _FirstProgressScreenState extends State<FirstProgressScreen> with SingleTi
                       maxHeight: 508,
                     ),
                     child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(firstProgressLightGreen),
+                      valueColor: AlwaysStoppedAnimation<Color>(colorVeryLightGreen),
                       strokeWidth: 10,
                     ),
                   ),
@@ -91,10 +91,10 @@ class _FirstProgressScreenState extends State<FirstProgressScreen> with SingleTi
 }
 
 class FirstProgressScreenViewModel extends BaseViewModel {
-  Color bgColor = whiteColor;
+  Color bgColor = colorWhite;
 
   initColor(Brightness brightness, Color scaffoldBackgroundColor) async {
-    bgColor = brightness == Brightness.dark ? mediumGray : whiteColor;
+    bgColor = brightness == Brightness.dark ? colorMediumGray : colorWhite;
     notifyListeners();
     await Future.delayed(Duration(milliseconds: 400));
     bgColor = scaffoldBackgroundColor;

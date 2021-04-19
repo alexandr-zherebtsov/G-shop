@@ -125,21 +125,21 @@ class ProfileEditingView extends StatelessWidget {
                             decoration: InputDecoration(
                               labelText: textAboutYourself,
                               errorText: null,
-                              errorStyle: const TextStyle(color: redColor),
+                              errorStyle: const TextStyle(color: colorRed),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: grayColor_2),
+                                borderSide: BorderSide(color: colorGray_2),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: lightGreen),
+                                borderSide: BorderSide(color: colorLightGreen),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: redColor),
+                                borderSide: BorderSide(color: colorRed),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: lightGreen),
+                                borderSide: BorderSide(color: colorLightGreen),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),

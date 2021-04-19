@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:g_shop/core/exeptions/exception_manager.dart';
+import 'package:g_shop/core/exceptions/exception_manager.dart';
 import 'package:g_shop/core/managers/dio_manager.dart';
 import 'package:g_shop/ui/utils/other_utils.dart';
 

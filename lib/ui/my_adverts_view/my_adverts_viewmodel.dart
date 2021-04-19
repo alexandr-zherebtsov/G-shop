@@ -7,7 +7,7 @@ import 'package:g_shop/core/services/advert_service.dart';
 import 'package:g_shop/generated/locator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:g_shop/core/exeptions/exception_handler.dart';
+import 'package:g_shop/core/exceptions/exception_handler.dart';
 
 class MyAdvertsViewModel extends FutureViewModel {
   final JsonDecoder _decoder = JsonDecoder();

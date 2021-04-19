@@ -16,6 +16,10 @@ const String themeLight = 'Light';
 const String themeDark = 'Dark';
 const String themeNoTheme = 'No theme';
 
+const String colorStatusAP = '#679238';
+const String colorActionAP = '#8BC34A';
+const String colorCircleAP = '#FFFFFF';
+
 const String userModelId = 'id';
 const String userModelPhoto = 'photo';
 const String userModelName = 'name';
@@ -36,5 +40,3 @@ const String routerAdvertCreateView = '/advert_create';
 const String routerAdvertEditingView = '/advert_editing';
 const String routerProfileView = '/profile';
 const String routerProfileEditingView = '/profile_editing';
-
-const String testingImage = 'https://cdn.shopify.com/s/files/1/1140/2426/products/Gibson-USA-Les-Paul-Standard-Electric-Guitar-Heritage-Cherry-Sunburst-11252_1600x1600.jpg?v=1588348769';

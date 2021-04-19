@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:g_shop/core/exeptions/exception_handler.dart';
+import 'package:g_shop/core/exceptions/exception_handler.dart';
 import 'package:g_shop/core/models/advert_model.dart';
 
 class AdvertService {

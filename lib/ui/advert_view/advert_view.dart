@@ -1,3 +1,4 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
 import 'package:g_shop/constants/localization.dart';
@@ -44,7 +45,7 @@ class AdvertView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
                   textShowContact,
-                  style: Theme.of(context).textTheme.headline3.copyWith(color: whiteColor),
+                  style: Theme.of(context).textTheme.headline3.copyWith(color: colorWhite),
                 ),
               ),
               onPressed: () => model.toProfile(e.uid),
@@ -61,26 +62,28 @@ class AdvertView extends StatelessWidget {
                   child: Container(
                     height: MediaQuery.of(context).size.width,
                     width: MediaQuery.of(context).size.width,
-                    color: blackColor.withOpacity(0.1),
-                    child: Image.network(
-                      testingImage,
-                      key: UniqueKey(),
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes : null,
-                          ),
-                        );
-                      },
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, _, error) => Icon(
-                        Icons.error_outline,
-                        size: 90,
-                      ),
+                    color: colorBlack.withOpacity(0.1),
+                    child: e.images == null || e.images.isEmpty ? Image.asset(
+                      imgGuitarVector,
+                      fit: BoxFit.fitHeight,
+                      color: Theme.of(context).textTheme.headline1.color.withOpacity(0.6),
+                    ) : Carousel(
+                      autoplay: false,
+                      dotBgColor: colorTransparent,
+                      dotIncreasedColor: colorLightGreen,
+                      images: e.images.map((img) => Image.network(
+                        img,
+                        fit: BoxFit.cover,
+                        key: UniqueKey(),
+                        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(child: CircularProgressIndicator());
+                        },
+                        errorBuilder: (context, _, error) => Icon(
+                          Icons.error_outline,
+                          size: 90,
+                        ),
+                      )).toList(),
                     ),
                   ),
                 ),
@@ -136,25 +139,30 @@ class AdvertView extends StatelessWidget {
               tag: e.id + heroPhoto,
               child: Container(
                 width: MediaQuery.of(context).size.height,
-                color: blackColor.withOpacity(0.1),
-                child: Image.network(
-                  testingImage,
-                  key: UniqueKey(),
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes : null,
+                color: colorBlack.withOpacity(0.1),
+                child: e.images == null || e.images.isEmpty ? Image.asset(
+                  imgGuitarVector,
+                  fit: BoxFit.fitHeight,
+                  color: Theme.of(context).textTheme.headline1.color.withOpacity(0.6),
+                ) : ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: Carousel(
+                    autoplay: false,
+                    dotBgColor: colorTransparent,
+                    dotIncreasedColor: colorLightGreen,
+                    images: e.images.map((img) => Image.network(
+                      img,
+                      fit: BoxFit.cover,
+                      key: UniqueKey(),
+                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(child: CircularProgressIndicator());
+                      },
+                      errorBuilder: (context, _, error) => Icon(
+                        Icons.error_outline,
+                        size: 90,
                       ),
-                    );
-                  },
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, _, error) => Icon(
-                    Icons.error_outline,
-                    size: 90,
+                    )).toList(),
                   ),
                 ),
               ),

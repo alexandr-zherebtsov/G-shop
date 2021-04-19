@@ -16,6 +16,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 class HomeView extends StatelessWidget {
   final int pageIndex;
   HomeView({Key key, this.pageIndex}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilderConnect<HomeViewModel>.reactive(
@@ -38,39 +39,41 @@ class HomeView extends StatelessWidget {
                 ),
             child: getTab(model.currentIndex, model.currentUserUid),
           ),
-          floatingActionButton: model.currentIndex == 3 ? null : FloatingActionButton(
-            heroTag: heroButtonCreateAdvert,
-            backgroundColor: Theme.of(context).buttonColor,
-            tooltip: textCreateAdvert,
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                color: Theme.of(context).buttonColor,
-                borderRadius: BorderRadius.all(Radius.circular(100)),
-                boxShadow: [
-                  BoxShadow(
-                    color: blackGrayColor.withOpacity(0.2),
-                    spreadRadius: 2,
-                    blurRadius: 2,
-                  ),
-                ],
-              ),
+          floatingActionButton: model.currentIndex == 3 ? null : Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(100)),
+              boxShadow: [
+                BoxShadow(
+                  color: colorBlack.withOpacity(0.2),
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                ),
+              ],
+            ),
+            child: FloatingActionButton(
+              elevation: 0.0,
+              focusElevation: 0.0,
+              hoverElevation: 0.0,
+              disabledElevation: 0.0,
+              highlightElevation: 0.0,
+              heroTag: heroButtonCreateAdvert,
+              backgroundColor: Theme.of(context).buttonColor,
+              tooltip: textCreateAdvert,
               child: Icon(
                 Icons.add,
                 color: Theme.of(context).iconTheme.color,
                 size: 40,
               ),
+              onPressed: () => model.toAdvertCreate(),
             ),
-            onPressed: () => model.toAdvertCreate(),
           ),
           bottomNavigationBar: BottomNavigationBar(
             elevation: 12.0,
             backgroundColor: Theme.of(context).appBarTheme.color,
             currentIndex: model.currentIndex,
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: whiteColor,
-            unselectedItemColor: whiteColor,
+            selectedItemColor: colorWhite,
+            unselectedItemColor: colorWhite,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             onTap: model.setIndex,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:g_shop/constants/colors.dart';
 import 'package:g_shop/constants/localization.dart';
 import 'package:g_shop/constants/strings.dart';
-import 'package:g_shop/core/exeptions/exception_handler.dart';
+import 'package:g_shop/core/exceptions/exception_handler.dart';
 import 'package:g_shop/core/services/auth_service.dart';
 import 'package:g_shop/core/services/dependency_injection.dart';
 import 'package:g_shop/generated/locator.dart';
@@ -28,7 +28,7 @@ class LogInViewModel extends BaseViewModel {
         locator<NavigationService>().clearStackAndShow(routerAppLoadingView);
       }
     } catch (e) {
-      showToast(textWrongData, redColor, whiteColor);
+      showToast(textWrongData, colorRed, colorWhite);
       handleErrorApp(e, _decoder);
     }
   }

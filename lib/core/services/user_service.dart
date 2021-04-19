@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:g_shop/core/exeptions/exception_handler.dart';
+import 'package:g_shop/core/exceptions/exception_handler.dart';
 
 class UserService {
   final JsonDecoder _decoder = JsonDecoder();
@@ -31,6 +31,14 @@ class UserService {
   }
 
   Future<void> editUser(String id, Map<String, dynamic> user) async {
+    try {
+      await _db.collection(_collectionUsers).doc(id).update(user);
+    } catch (e) {
+      handleErrorApp(e, _decoder);
+    }
+  }
+
+  Future<void> addUserPhoto(String id, Map<String, dynamic> user) async {
     try {
       await _db.collection(_collectionUsers).doc(id).update(user);
     } catch (e) {
