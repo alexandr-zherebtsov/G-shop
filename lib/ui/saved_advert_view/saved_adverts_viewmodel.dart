@@ -11,11 +11,13 @@ import 'package:stacked_services/stacked_services.dart';
 
 class SavedAdvertsViewModel extends FutureViewModel {
   final JsonDecoder _decoder = JsonDecoder();
-  bool isSearch = false;
+  final AdvertService _advertService = locator<AdvertService>();
+  final NavigationService _navigationService = locator<NavigationService>();
   final TextEditingController searchTextController = TextEditingController();
   String currentUserUid = FirebaseAuth.instance.currentUser.uid;
   List<AdvertModel> advertsSaved = [];
   List<AdvertModel> advertsSavedSearched = [];
+  bool isSearch = false;
 
   @override
   Future futureToRun() async {
@@ -24,7 +26,7 @@ class SavedAdvertsViewModel extends FutureViewModel {
 
   Future<void> getAdverts() async {
     try {
-      advertsSaved = await locator<AdvertService>().getMySavedAdverts(currentUserUid);
+      advertsSaved = await _advertService.getMySavedAdverts(currentUserUid);
     } catch (e) {
       handleErrorApp(e, _decoder);
     }
@@ -39,7 +41,7 @@ class SavedAdvertsViewModel extends FutureViewModel {
     advertsSavedSearched.clear();
     for(int i = 0; i < advertsSaved.length; i++) {
       if(advertsSaved[i].headline.replaceAll(' ', '').trim().toLowerCase().contains(searchTextController.text.replaceAll(' ', '').trim().toLowerCase())
-          || advertsSaved[i].price.toString().replaceAll(' ', '').trim().toLowerCase().startsWith(searchTextController.text.replaceAll(' ', '').trim().toLowerCase())
+        || advertsSaved[i].price.toString().replaceAll(' ', '').trim().toLowerCase().startsWith(searchTextController.text.replaceAll(' ', '').trim().toLowerCase())
       ) {
         advertsSavedSearched..add(advertsSaved[i]);
       }
@@ -55,7 +57,7 @@ class SavedAdvertsViewModel extends FutureViewModel {
   }
 
   void toAdvertCreate() {
-    locator<NavigationService>().navigateTo(routerAdvertCreateView);
+    _navigationService.navigateTo(routerAdvertCreateView);
   }
 
 }

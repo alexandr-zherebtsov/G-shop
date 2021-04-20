@@ -7,6 +7,7 @@ import 'package:g_shop/core/base/custom_view_model_builder.dart';
 import 'package:g_shop/core/models/user_model.dart';
 import 'package:g_shop/ui/profile_editing/profile_editing_viewmodel.dart';
 import 'package:g_shop/ui/utils/alert_widget.dart';
+import 'package:g_shop/ui/utils/progress_screen.dart';
 import 'package:g_shop/ui/utils/scroll_custom.dart';
 import 'package:g_shop/ui/widgets/custom_button_widget.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -19,7 +20,7 @@ class ProfileEditingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilderConnect<ProfileEditingViewModel>.reactive(
       viewModelBuilder: () => ProfileEditingViewModel(),
-      builder: (context, model, _) => Scaffold(
+      builder: (context, model, _) => model.isBusy ? ProgressScreen() : Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
@@ -34,7 +35,7 @@ class ProfileEditingView extends StatelessWidget {
                 context,
                 textDeleteAccount + markQuestion,
                 textDescriptionDeleteAccount,
-                () => model.deleteUser(user.id, user.email),
+                () => model.deleteUser(user),
                 model.deletePasswordController,
                 model.deleteFormKey,
               ),
